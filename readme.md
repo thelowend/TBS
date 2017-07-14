@@ -19,31 +19,42 @@ systemLog:
 - Luego, todavía parados en la raíz \DB\, crear otras dos carpetas, "data" y "log". En la primera se almacenarán los datos de la base y en la segunda un archivo de logs.
 
 
-Corriendo la base de datos
---------------------------
+## Corriendo la base de datos
 
-- En PowerShell con admin, para correr el servicio, estando aún parado en la carpeta /DB/ que creamos, ejecutar:
-`mongod -f mongod.conf`
+- En PowerShell con admin, para correr el servicio, estando aún parado en la carpeta /DB/ que creamos, ejecutar:  
+```
+mongod -f mongod.conf
+```
 
 - Si en lugar de tener la base corriendo en una ventana de powershell, queremos instalar el servicio en background, podemos realizar los siguientes pasos:
-- Ejecutamos el comando mongod pero le agregamos --install, y pasamos el path absoluto del archivo de configuración:
-`mongod -f D:\Documents\Proyectos\Seminario1\DB\mongod.conf --install`
+- Ejecutamos el comando mongod pero le agregamos --install, y pasamos el path absoluto del archivo de configuración:  
+```
+mongod -f D:\Documents\Proyectos\Seminario1\DB\mongod.conf --install
+```
 
-- El paso anterior tiene que haber registrado un servicio en Windows de nombre por defecto "MongoDB". Si al paso anterior le agrego '--serviceName NombreX' se llamará NombreX.
-`net start MongoDB`
+- El paso anterior tiene que haber registrado un servicio en Windows de nombre por defecto "MongoDB". Si al paso anterior le agrego '--serviceName NombreX' se llamará NombreX.  
+```
+net start MongoDB
+```
 
-- Con el paso anterior quedará corriendo en el background. Para detenerlo:
-`net stop MongoDB`
+- Con el paso anterior quedará corriendo en el background. Para detenerlo:  
+```
+net stop MongoDB
+```
 
-- Para eliminar el servicio (Agregar '--serviceName NombreX' en caso de que se haya utilizado)
-`mongod --remove`
+- Para eliminar el servicio (Agregar '--serviceName NombreX' en caso de que se haya utilizado):  
+```
+mongod --remove
+```
 
-Accediendo a la base de datos
------------------------------
-- Una vez que el servicio está corriendo, podemos entrar desde la consola de mongo ejecutando simplemente el comando "mongo":
-`mongo`
+## Accediendo a la base de datos
 
-- Dentro del cliente de Mongo que se ejecutó, selecciono/creo la base de datos con el comando "use <nombre_de_base>":
+- Una vez que el servicio está corriendo, podemos entrar desde la consola de mongo ejecutando simplemente el comando "mongo":  
+```
+mongo
+```
+
+- Dentro del cliente de Mongo que se ejecutó, selecciono/creo la base de datos con el comando `use <nombre_de_base>`:  
 ```
 > use tbs
 > db.createCollection("User");
