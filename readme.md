@@ -7,13 +7,14 @@
 - Crear una carpeta para almacenar la base de datos en sí. En mi caso creé la siguiente carpeta: "D:\Documents\Proyectos\Seminario1\DB\".
 - Dentro de la misma, crear un archivo mongod.conf con el siguiente contenido, modificando las rutas en caso de que sea necesario:
 
-```storage:
+```yaml
+storage:
   dbPath: D:\Documents\Proyectos\Seminario1\DB\data\
 systemLog:
   destination: file
   path: D:\Documents\Proyectos\Seminario1\DB\log\mongod.log
-  logAppend: true```
-
+  logAppend: true
+```
 
 - Luego, todavía parados en la raíz \DB\, crear otras dos carpetas, "data" y "log". En la primera se almacenarán los datos de la base y en la segunda un archivo de logs.
 
