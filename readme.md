@@ -66,3 +66,7 @@ mongo
 ```
 
 - Con eso quedaría creada la base de datos de nombre "tbs" con las collections User, Roles, Tasks, Projects, Clients y Skills.
+
+# Server
+
+- Con el mongo corriendo, podemos empezar a interactuar con la base de datos mediante NodeJS y Mongoose
