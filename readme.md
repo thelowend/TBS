@@ -70,3 +70,18 @@ mongo
 # Server
 
 - Con el mongo corriendo, podemos empezar a interactuar con la base de datos mediante NodeJS y Mongoose
+
+- Para correr el server, el único requisito es tener NodeJs instalado (Se baja el instalador de la página oficial).
+- Una vez instalado NodeJs, en la carpeta base, en este caso /Server/, correr el comando:
+```
+npm install
+```
+- Cuando termina la instalación, el servidor se ejecuta en la misma carpeta con:
+```
+node server
+```
+- Con el servidor corriendo (esta configurado para levantarse en http://localhost:8080), podemos pegarle a las rutas configuradas en /Server/app/routes/. Por ejemplo:
+```
+http://localhost:8080/api/user
+```
+- Es recomendable utilizar alguna aplicación como POSTMAN (Extensión de Google Chrome) para hacer pedidos GET, PUT, DELETE, POST, etc. a las rutas configuradas en el servidor.
