@@ -1,11 +1,13 @@
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { ManageSkillsComponent } from './components/manage-skills/manage-skills.component';
+import { HomeComponent, LoginComponent, RegisterComponent, ManageSkillsComponent } from './components/index';
+import { AuthGuard } from './_guards/index';
 
 const APP_ROUTES: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'manage-skills', component: ManageSkillsComponent },
-  { path: '**', pathMatch: 'full', redirectTo: 'home' }
+  { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES);
