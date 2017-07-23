@@ -14,7 +14,7 @@ import { AlertService, AuthenticationService, UserService } from './_services/in
 import { AppComponent } from './app.component';
 
 // Sections
-import { NavbarComponent, ManageSkillsComponent, AlertComponent, HomeComponent, LoginComponent, RegisterComponent } from './components/index';
+import { NavbarComponent, ManageSkillsComponent, AlertComponent, HomeComponent, LoginComponent, RegisterComponent, SearchComponent, ReportsComponent, UsersComponent, ClientsComponent, ProjectsComponent, RolesComponent, TeamComponent } from './components/index';
 
 // Guards
 import { AuthGuard } from './_guards/index';
@@ -25,7 +25,6 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { BaseRequestOptions } from '@angular/http';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +33,14 @@ import { BaseRequestOptions } from '@angular/http';
     HomeComponent,
     RegisterComponent,
     ManageSkillsComponent,
-    AlertComponent
+    AlertComponent,
+    SearchComponent,
+    ReportsComponent,
+    UsersComponent,
+    ClientsComponent,
+    ProjectsComponent,
+    RolesComponent,
+    TeamComponent
   ],
   imports: [
     BrowserModule,

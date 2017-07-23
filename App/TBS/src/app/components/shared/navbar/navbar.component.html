@@ -5,32 +5,32 @@
   <a class="navbar-brand" href="#"><img src="/assets/brand/tbs.png" width="30" height="30" class="d-inline-block align-top" alt=""> TBS</a>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['home']">Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="manage-skills">Manage Skills</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['manage-skills']">Manage Skills</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="search">Search</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/search']">Search</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="reports">Reports</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['reports']">Reports</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="users">Users</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/users']">Users</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="clients">Clients</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/clients']">Clients</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="projects">Projects</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/projects']">Projects</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="roles">Roles</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link"[routerLink]="['/roles']">Roles</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="team"><img src="/assets/icons/users.svg" width="20" height="20" class="d-inline-block align-middle" alt=""> Team (0)</a>
+      <li class="nav-item" [routerLinkActive]="['active']">
+        <a class="nav-link" [routerLink]="['/team']"><img src="/assets/icons/users.svg" width="20" height="20" class="d-inline-block align-middle" alt=""> Team (0)</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
