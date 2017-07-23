@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// load the User model
+// load the Project model
 const Project = require('../models/project');
 
 module.exports = {

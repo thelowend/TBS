@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const checkAuth = require('../services/checkauth');
 
 // Routes
+const RouteInit = require('../routes/init');
 const RouteUser = require('../routes/user');
 const RouteProject = require('../routes/project');
 
@@ -14,6 +15,9 @@ module.exports = (app) => {
 
     // User Authentication
     app.post('/api/authenticate', RouteUser.login);
+
+    // DB Initialization
+    app.post('/api/init', RouteInit.post);
 
     // Users
     app.get('/api/user', checkAuth, RouteUser.get);

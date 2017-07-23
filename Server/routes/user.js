@@ -37,8 +37,7 @@ module.exports = {
 		res.status(200).send('DELETE user');
 	},
 	register: function (req, res) {
-    console.log(req.body);
-		User.findOne({ email: req.body.email}, function (err, existingUser) {
+		User.findOne({ email: req.body.email }, function (err, existingUser) {
 			if (existingUser) {
 				return res.status(409).send({ message: 'email is already taken'});
 			};
