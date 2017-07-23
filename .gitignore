@@ -1,5 +1,4 @@
-DB/data/
-DB/log/
+DB/
 Server/node_modules/
 .DS_Store
 .DS_Store?
