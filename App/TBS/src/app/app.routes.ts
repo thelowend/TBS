@@ -3,7 +3,7 @@ import { HomeComponent, LoginComponent, RegisterComponent, ManageSkillsComponent
 import { AuthGuard } from './_guards/index';
 
 const APP_ROUTES: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'manage-skills', component: ManageSkillsComponent },
@@ -14,7 +14,7 @@ const APP_ROUTES: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'roles', component: RolesComponent },
   { path: 'team', component: TeamComponent },
-  { path: '**', pathMatch: 'full', redirectTo: '' }
+  { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(APP_ROUTES);

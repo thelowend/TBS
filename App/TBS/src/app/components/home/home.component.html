@@ -1,13 +1,26 @@
-  <div class="row justify-content-center">
-    <div class="col-12">
-        <h1>Hi {{currentUser.firstName}}!</h1>
-        <p>You're logged in with Angular 2!!</p>
-        <h3>All registered users:</h3>
-        <ul>
-            <li *ngFor="let user of users">
-                {{user.username}} ({{user.firstName}} {{user.lastName}})
-                - <a (click)="deleteUser(user.id)">Delete</a>
-            </li>
-        </ul>
-    </div>
+<div class="row">
+  <div class="col-2">
+    <img src="/assets/brand/tbs.png" width="100%" class="" alt="">
   </div>
+  <div class="col-10 float-left">
+      <h1>Hi {{currentUser.firstName}}!</h1>
+      <p>You're logged in with Angular 2!!</p>
+      <h3>All registered users:</h3>
+      <ul>
+          <li *ngFor="let user of users">
+              {{user.username}} ({{user.firstName}} {{user.lastName}})
+              - <a (click)="deleteUser(user.id)">Delete</a>
+          </li>
+      </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <span>Acá van las sugerencias</span>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <span>Acá va la tablita de skills</span>
+  </div>
+</div>
