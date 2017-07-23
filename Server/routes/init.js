@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Q = require('q');
+const _ = require('underscore');
 
 // load the models
 const Client = require('../models/client');
@@ -12,35 +13,127 @@ const Status = require('../models/status');
 const Task = require('../models/task');
 const User = require('../models/user');
 
-const secondaryTables = function () {
+const tertiaryTables = function (req, res, db) {
+  //Creates users
+  let userDefer = Q.defer();
+  User.insertMany([{
+    status: statusActivoId,
+    file_number: 123,
+    name: 'Diego Pablos',
+    pid_type: 'DNI',
+    pid_number: 1022185,
+    address: 'Calle Uno 123',
+    phone: 5552222,
+    email: 'dpablos@iade.edu.ar',
+    password: '123',
+    interests: 'Basketball, Animals',
+    skills: [{
+      skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },
+      level: { type: Number, required: true, default: 1 },
+      verified: { type: Boolean, required: true, default: false }
+    },{
+      skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },
+      level: { type: Number, required: true, default: 1 },
+      verified: { type: Boolean, required: true, default: false }
+    }],
+    experience: [{
+      employer: { type: String, required: true },
+      description: { type: String, required: true },
+      start_date: { type: Date, required: true },
+      end_date: { type: Date, required: true }
+    },{
+      employer: { type: String, required: true },
+      description: { type: String, required: true },
+      start_date: { type: Date, required: true },
+      end_date: { type: Date, required: true }
+    }],
+    roles: []
+  },{
+    status: statusActivoId,
+    file_number: 123,
+    name: 'Diego Pablos',
+    pid_type: 'DNI',
+    pid_number: 1022185,
+    address: 'Calle Uno 123',
+    phone: 5552222,
+    email: 'dpablos@iade.edu.ar',
+    password: '123',
+    interests: 'Basketball, Animals',
+    skills: [],
+    experience: [],
+    roles: []
+  },{
+    status: statusActivoId,
+    file_number: 123,
+    name: 'Diego Pablos',
+    pid_type: 'DNI',
+    pid_number: 1022185,
+    address: 'Calle Uno 123',
+    phone: 5552222,
+    email: 'dpablos@iade.edu.ar',
+    password: '123',
+    interests: 'Basketball, Animals',
+    skills: [],
+    experience: [],
+    roles: []
+  },{
+    status: statusActivoId,
+    file_number: 123,
+    name: 'Diego Pablos',
+    pid_type: 'DNI',
+    pid_number: 1022185,
+    address: 'Calle Uno 123',
+    phone: 5552222,
+    email: 'dpablos@iade.edu.ar',
+    password: '123',
+    interests: 'Basketball, Animals',
+    skills: [],
+    experience: [],
+    roles: []
+  }], function (err, user) {
+    if (err) {
+      userDefer.reject();
+    }
+    userDefer.resolve(user);
+  });
 
-  // Create Roles
-  let roleDefer = Q.Defer();
+  Q.allSettled([userDefer.promise, projectDefer.promise]).then(function (results) {
+    console.log('---- Tertiary Tables Updated ----');
 
-  Task.find({ name: 'CreateProject' }, { _id: 1 }, function () {
+    let map = ['user', 'project'];
+
+    _(results).each((result, index) => {
+      db[map[index]] = result.value;
+    });
+
+    res.status(200).send(db);
 
   });
 
-  Task.find({ $and : [{ name: 'ManageProject' }, { name: 'EvaluateSkills'] }}, { _id: 1 }, function () {
+}
 
-  });
+const secondaryTables = function (req, res, db) {
 
-  Task.find({ $and : [{ name: 'ManageProject' }, { name: 'ManageSkills'] }}, { _id: 1 }, function () {
+  //Getting recently inserted Tasks IDs
+  let taskCreateProjectId = mongoose.Types.ObjectId(_.find(db.task, (task) => { return task.name === 'CreateProject'}))._id),
+      taskManageProjectId = mongoose.Types.ObjectId(_.find(db.task, (task) => { return task.name === 'ManageProject'}))._id),
+      taskEvaluateSkills = mongoose.Types.ObjectId(_.find(db.task, (task) => { return task.name === 'EvaluateSkills'}))._id),
+      taskManageSkills = mongoose.Types.ObjectId(_.find(db.task, (task) => { return task.name === 'ManageSkills'}))._id);
 
-  });
-
+  //Creates roles
+  let roleDefer = Q.defer();
   Role.insertMany([{
     name: 'RRHH',
     description: 'Usuario de Recursos Humanos',
-    tasks: [TaskSchema]
+    tasks: [taskCreateProjectId]
   },{
     name: 'Lead',
     description: 'Lider de Proyecto',
-    tasks: [TaskSchema]
+    tasks: [taskManageProjectId, taskEvaluateSkills]
   },{
     name: 'Admin',
     description: 'Administrador de la aplicación',
-    tasks: [TaskSchema]
+    tasks: [taskManageProjectId, ManageSkills]
   },{
     name: 'Programador',
     description: 'Usuario Programador',
@@ -49,60 +142,51 @@ const secondaryTables = function () {
     if (err) {
       roleDefer.reject();
     }
-    roleDefer.resolve('| Roles created');
+    roleDefer.resolve(role);
   });
 
+  //Getting recently inserted Statuses IDs
+  let statusActivoId = mongoose.Types.ObjectId(_.find(db.status, (status) => { return status.name === 'Activo'}))._id),
+      statusPendienteId = mongoose.Types.ObjectId(_.find(db.status, (status) => { return status.name === 'Pendiente'}))._id),
+      statusInactivoId = mongoose.Types.ObjectId(_.find(db.status, (status) => { return status.name === 'Inactivo'}))._id),
+      statusVigenteId = mongoose.Types.ObjectId(_.find(db.status, (status) => { return status.name === 'Vigente'}))._id),
+      statusFinalizadoId = mongoose.Types.ObjectId(_.find(db.status, (status) => { return status.name === 'Finalizado'}))._id);
+
   //Creates skills
-  let skillDefer = Q.Defer();
+  let skillDefer = Q.defer();
   Skill.insertMany([{
-    status:
+    status: statusActivoId,
     name: 'Javascript',
     description: 'ES5/ES6/ES7'
   },{
-    status:
+    status: statusPendienteId,
     name: 'Java',
     description: 'Java Enterprise'
   },{
-    status:
+    status: statusActivoId,
     name: 'Jenkins',
     description: 'Jenkins Scripts'
   },{
-    status:
+    status: statusPendienteId,
     name: '3D Modeling',
     description: 'Bender/Maya'
   }], function (err, skill) {
     if (err) {
       skillDefer.reject();
     }
-    skillDefer.resolve('| Skill', skill._id, 'created');
+    skillDefer.resolve(skill);
   });
 
+  Q.allSettled([roleDefer.promise, skillDefer.promise]).then(function (results) {
+    console.log('---- Secondary Tables Updated ----');
 
-  //Creates a project
-  let projectDefer = Q.Defer();
-  Project.create({
-    size: 'small'
-  }, function (err, project) {
-    if (err) {
-      projectDefer.reject();
-    }
-    projectDefer.resolve('| Project', project._id, 'created');
-  });
+    let map = ['role', 'skill'];
 
-  //Creates an user
-  let userDefer = Q.Defer();
-  User.create({
-    size: 'small'
-  }, function (err, user) {
-    if (err) {
-      userDefer.reject();
-    }
-    userDefer.resolve('| User', user._id, 'created');
-  });
+    _(results).each((result, index) => {
+      db[map[index]] = result.value;
+    });
 
-
-  Q.allSettled([projectDefer.promise, userDefer.promise]).then(function (err, result) {
-    res.status(200).send(result);
+    tertiaryTables(req, res, db);
   });
 
 };
@@ -110,8 +194,11 @@ const secondaryTables = function () {
 module.exports = {
 	post: function (req, res) {
 
+    //Drops existing
+    mongoose.connection.db.dropDatabase();
+
     //Creates Statuses
-    let statusDefer = Q.Defer();
+    let statusDefer = Q.defer();
     Status.insertMany([{
       name: 'Activo',
       description: 'Estado activo.'
@@ -127,30 +214,32 @@ module.exports = {
     },{
       name: 'Finalizado',
       description: 'Proyecto finalizado.'
-    }], function (err, status) {
+    }], function (err, statuses) {
+      //_(statuses).each((status) => console.log(status.name, 'Status Inserted'));
       if (err) {
         statusDefer.reject();
       }
-      statusDefer.resolve('| Statuses created!');
+      statusDefer.resolve(statuses);
     });
 
     //Create Clients
-    let clientDefer = Q.Defer();
+    let clientDefer = Q.defer();
     Client.insertMany([{
       name: 'Cliente Importante',
       description: 'Es un cliente muy importante.'
     },{
       name: 'Cliente Mediocre',
       description: 'Es un cliente mediocre.'
-    }], function (err, client) {
+    }], function (err, clients) {
+      //_(clients).each((client) => console.log(client.name, 'Client Inserted'));
       if (err) {
         clientDefer.reject();
       }
-      clientDefer.resolve('| Clients created');
+      clientDefer.resolve(clients);
     });
 
     //Create Tasks
-    let taskDefer = Q.Defer();
+    let taskDefer = Q.defer();
     Task.insertMany([{
       name: 'CreateProject',
       description: 'Crear Proyectos y asignarles Cliente, Lead.'
@@ -163,21 +252,29 @@ module.exports = {
     },{
       name: 'EvaluateSkills',
       description: 'Permite verificar los Skills de los User'
-    }], function (err, task) {
+    }], function (err, tasks) {
+      //_(tasks).each((task) => console.log(task.name, 'Task Inserted'));
       if (err) {
         taskDefer.reject();
       }
-      taskDefer.resolve('| Tasks created');
+      taskDefer.resolve(tasks);
     });
 
-    Q.allSettled([statusDefer.promise, clientDefer.promise, taskDefer.promise]).then(function (err, result) {
-      console.log(err, result);
-      //TODO error check
-      //if (!err) {
 
-      //}
-      secondaryTables();
+
+    Q.allSettled([statusDefer.promise, clientDefer.promise, taskDefer.promise]).then(function (results) {
+      console.log('---- Primary Tables Updated ----');
+
+      let db = {};
+      let map = ['status', 'client', 'task'];
+
+      _(results).each((result, index) => {
+        db[map[index]] = result.value;
+      });
+
+      secondaryTables(req, res, db);
     });
+
 
 	}
 };

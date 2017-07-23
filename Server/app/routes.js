@@ -46,7 +46,7 @@ module.exports = (app) => {
     app.delete('/api/role', checkAuth, checkPermissions, RouteRole.delete);
 
     // Skill
-    app.get('/api/skill', checkAuth, checkPermissions, RoutesSkill.get);
+    app.get('/api/skill', checkAuth, checkPermissions, RouteSkill.get);
     app.put('/api/skill', checkAuth, checkPermissions, RouteSkill.put);
     app.delete('/api/skill', checkAuth, checkPermissions, RouteSkill.delete);
 

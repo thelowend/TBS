@@ -1,13 +1,18 @@
 // app/models/user.js
     const mongoose = require('mongoose');
     const Schema = mongoose.Schema;
-    const SkillSchema = require('../models/skill');
 
     let UserExperienceSchema = Schema({
       employer: { type: String, required: true },
       description: { type: String, required: true },
       start_date: { type: Date, required: true },
       end_date: { type: Date, required: true },
+    }, { _id: false });
+
+    let UserSkillSchema = Schema({
+      skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },
+      level: { type: Number, required: true, default: 1 },
+      verified: { type: Boolean, required: true, default: false }
     }, { _id: false });
 
     let UserSchema = Schema({
@@ -21,7 +26,7 @@
       email: { type: String, required: true },
       password: { type: String, required: false },
       interests: { type: String, required: false },
-      skills: [SkillSchema],
+      skills: [UserSkillSchema],
       experience: [UserExperienceSchema],
       roles: { type: Array, required: false }
     });
