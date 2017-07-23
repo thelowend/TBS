@@ -12,6 +12,101 @@ const Status = require('../models/status');
 const Task = require('../models/task');
 const User = require('../models/user');
 
+const secondaryTables = function () {
+
+  // Create Roles
+  let roleDefer = Q.Defer();
+
+  Task.find({ name: 'CreateProject' }, { _id: 1 }, function () {
+
+  });
+
+  Task.find({ $and : [{ name: 'ManageProject' }, { name: 'EvaluateSkills'] }}, { _id: 1 }, function () {
+
+  });
+
+  Task.find({ $and : [{ name: 'ManageProject' }, { name: 'ManageSkills'] }}, { _id: 1 }, function () {
+
+  });
+
+  Role.insertMany([{
+    name: 'RRHH',
+    description: 'Usuario de Recursos Humanos',
+    tasks: [TaskSchema]
+  },{
+    name: 'Lead',
+    description: 'Lider de Proyecto',
+    tasks: [TaskSchema]
+  },{
+    name: 'Admin',
+    description: 'Administrador de la aplicación',
+    tasks: [TaskSchema]
+  },{
+    name: 'Programador',
+    description: 'Usuario Programador',
+    tasks: []
+  }], function (err, role) {
+    if (err) {
+      roleDefer.reject();
+    }
+    roleDefer.resolve('| Roles created');
+  });
+
+  //Creates skills
+  let skillDefer = Q.Defer();
+  Skill.insertMany([{
+    status:
+    name: 'Javascript',
+    description: 'ES5/ES6/ES7'
+  },{
+    status:
+    name: 'Java',
+    description: 'Java Enterprise'
+  },{
+    status:
+    name: 'Jenkins',
+    description: 'Jenkins Scripts'
+  },{
+    status:
+    name: '3D Modeling',
+    description: 'Bender/Maya'
+  }], function (err, skill) {
+    if (err) {
+      skillDefer.reject();
+    }
+    skillDefer.resolve('| Skill', skill._id, 'created');
+  });
+
+
+  //Creates a project
+  let projectDefer = Q.Defer();
+  Project.create({
+    size: 'small'
+  }, function (err, project) {
+    if (err) {
+      projectDefer.reject();
+    }
+    projectDefer.resolve('| Project', project._id, 'created');
+  });
+
+  //Creates an user
+  let userDefer = Q.Defer();
+  User.create({
+    size: 'small'
+  }, function (err, user) {
+    if (err) {
+      userDefer.reject();
+    }
+    userDefer.resolve('| User', user._id, 'created');
+  });
+
+
+  Q.allSettled([projectDefer.promise, userDefer.promise]).then(function (err, result) {
+    res.status(200).send(result);
+  });
+
+};
+
 module.exports = {
 	post: function (req, res) {
 
@@ -21,9 +116,18 @@ module.exports = {
       name: 'Activo',
       description: 'Estado activo.'
     },{
+      name: 'Pendiente',
+      description: 'Pendiente de aprobación.'
+    },{
       name: 'Inactivo',
       description: 'Estado inactivo.'
-    }], function(err, status) {
+    },{
+      name: 'Vigente',
+      description: 'Proyecto Vigente.'
+    },{
+      name: 'Finalizado',
+      description: 'Proyecto finalizado.'
+    }], function (err, status) {
       if (err) {
         statusDefer.reject();
       }
@@ -42,60 +146,37 @@ module.exports = {
       if (err) {
         clientDefer.reject();
       }
-      clientDefer.resolve('| Client', client._id, ':', client.name, 'created');
+      clientDefer.resolve('| Clients created');
     });
 
-    //Creates skills
-    let skillDefer = Q.Defer();
-    Skill.insertMany([{
-      status: 
-      name: 'Javascript',
-      description: 'ES5/ES6/ES7'
+    //Create Tasks
+    let taskDefer = Q.Defer();
+    Task.insertMany([{
+      name: 'CreateProject',
+      description: 'Crear Proyectos y asignarles Cliente, Lead.'
     },{
-      status:
-      name: 'Java',
-      description: 'Java Enterprise'
+      name: 'ManageProject',
+      description: 'Administrar Skill, Empleados, y Status de un Proyecto.'
     },{
-      status:
-      name: 'Jenkins',
-      description: 'Jenkins Scripts'
+      name: 'ManageSkills',
+      description: 'Administrar Skills globales'
     },{
-      status:
-      name: '3D Modeling',
-      description: 'Bender/Maya'
-    }], function (err, skill) {
+      name: 'EvaluateSkills',
+      description: 'Permite verificar los Skills de los User'
+    }], function (err, task) {
       if (err) {
-        skillDefer.reject();
+        taskDefer.reject();
       }
-      skillDefer.resolve('| Skill', skill._id, 'created');
+      taskDefer.resolve('| Tasks created');
     });
 
+    Q.allSettled([statusDefer.promise, clientDefer.promise, taskDefer.promise]).then(function (err, result) {
+      console.log(err, result);
+      //TODO error check
+      //if (!err) {
 
-    //Creates a project
-    let projectDefer = Q.Defer();
-    Project.create({
-      size: 'small'
-    }, function (err, project) {
-      if (err) {
-        projectDefer.reject();
-      }
-      projectDefer.resolve('| Project', project._id, 'created');
-    });
-
-    //Creates an user
-    let userDefer = Q.Defer();
-    User.create({
-      size: 'small'
-    }, function (err, user) {
-      if (err) {
-        userDefer.reject();
-      }
-      userDefer.resolve('| User', user._id, 'created');
-    });
-
-
-    Q.allSettled([projectDefer.promise, userDefer.promise]).then(function (err, result) {
-      res.status(200).send(result);
+      //}
+      secondaryTables();
     });
 
 	}
