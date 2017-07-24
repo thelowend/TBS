@@ -11,7 +11,7 @@
 
     let UserSkillSchema = Schema({
       skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },
-      level: { type: Number, required: true, default: 1 },
+      level: { type: Number, required: true, default: 1, enum: [1,2,3,4,5] },
       verified: { type: Boolean, required: true, default: false }
     }, { _id: false });
 
