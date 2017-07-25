@@ -3,9 +3,13 @@
     <img src="/assets/brand/tbs.png" width="100%" class="" alt="">
   </div>
   <div class="col-8 float-left">
-      <h1>{{currentUser.info.name}}!</h1>
-      <h2>{{currentUser.info.name}}!</h2>
-      <p>You're logged in with Angular 2!!</p>
+      <h1>{{currentUser.info.name}}</h1>
+      <h2>{{currentUser.info.role.description}}</h2>
+      <p>{{currentUser.info.experience[0].description}}</p>
+      <div class="options">
+        <p><a>Update Password</a></p>
+        <p><a>Resume</a></p>
+      </div>
   </div>
 </div>
 <div class="row">

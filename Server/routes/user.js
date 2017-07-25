@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const Q = require('q');
 const _ = require('underscore');
 
 // load the User model
@@ -21,13 +22,16 @@ let createToken = function (user) {
 module.exports = {
   get: function (req, res) {
     //code to get user info
-    User.findOne({ email: req.query.email }, function (err, existingUser) {
+    User.findOne({ email: req.query.email });
+		/*
+		function (err, existingUser) {
       if (!err) {
         res.status(200).send(existingUser);
       } else {
         console.log(err);
       }
-    });
+    }
+		*/
   },
   put: function (req, res) {
     //code to insert user
@@ -55,21 +59,24 @@ module.exports = {
 		});
 	},
 	login: function (req, res) {
-		User.findOne({ email: req.body.email }, function(err, user) {
-			if (!user) {
-				return res.status(401).send({ message: 'email/password is invalid'});
-			};
+		Q(User.findOne({ email: req.body.email })
+			.populate('status')
+			.populate('role').exec()).then(function(user) {
+				if (!user) {
+					return res.status(401).send({ message: 'email/password is invalid'});
+				};
 
-			if (req.body.password === user.password) {
+				if (req.body.password === user.password) {
+					res.send({
+						info: _.omit(user, 'password'),
+						token: createToken(user)
+					});
+				} else {
+					return res.status(401).send({ message: 'email/password is invalid'});
+				}
 
-				res.send({
-					info: _.omit(user, 'password'),
-					token: createToken(user)
-				});
-			} else {
-				return res.status(401).send({ message: 'email/password is invalid'});
-			}
+			});
 
-		});
+		//User.findOne({ email: req.body.email }, );
 	}
 };
