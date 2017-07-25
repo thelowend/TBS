@@ -26,3 +26,22 @@ html, body {
 .progress {
   background: #ccc;
 }
+
+.table {
+  th, td {
+      text-align: center;
+  }
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.abm-form {
+  border: solid 2px black;
+  border-radius: 3px;
+  padding: 1rem;
+}
+.action-link {
+  padding: 0 .5rem;
+}

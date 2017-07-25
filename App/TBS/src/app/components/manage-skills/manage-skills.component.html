@@ -1,3 +1,98 @@
-<p>
-  manage-skills works!
-</p>
+<div class="row top-row justify-content-center">
+  <div class="col-12">
+    <h1>{{currentUser.info.name}}'s Skills</h1>
+  </div>
+  <div class="col-8">
+      <div class="abm-form">
+        <div class="row">
+          <div class="col-8">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Skill to search...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button">Select Skill</button>
+              </span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group d-flex flex-end">
+                <button class="btn btn-primary"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Skill:</label>
+              <div class="col-10">
+                <p class="form-control-static">Skill Name</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Score:</label>
+              <div class="col-10">
+                <p class="form-control-static">Skill Level</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="col-4">
+    <div class="skill-reference">
+      <div class="row">
+        <div class="col-12">
+          <h2>Skill Reference</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <ul class="skill-reference">
+            <li><p><b>1-3</b> - Can work with heavy supervision</p></li>
+            <li><p><b>4-6</b> - Can work with light supervision</p></li>
+            <li><p><b>7-9</b> - Can work with no supervision</p></li>
+            <li><p><b>10</b>  - Can teach / manage</p></li>
+          </ul>
+        </div>
+        <div class="col-10">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Skill</th>
+          <th>Score</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let skill of currentUser.info.skills; let i = index">
+          <td>{{skill.skill.description}}</td>
+          <!--td>{{skill.level}}/10</td-->
+          <td>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [ngStyle]="{width: skill.level/10 | percent:'1.0-1'}" [attr.aria-valuenow]="skill.level" aria-valuemin="0" aria-valuemax="10">{{skill.level}}/10</div>
+            </div>
+          </td>
+          <td>
+            <a class="action-link"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            <a class="action-link"><i class="fa fa-trash" aria-hidden="true"></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
+  </div>
+</div>
