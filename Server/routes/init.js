@@ -39,7 +39,7 @@ const addProjects = function (req, res, db) {
   let userDiegoId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'diegop@tbs.com'})._id),
       userJonId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'jon@tbs.com'})._id),
       userJaneId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'jane@tbs.com'})._id),
-      userRRHHId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'rrhh@tbs.com'})._id),
+      userRRHHId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'hr@tbs.com'})._id),
       userLeadId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'lead@tbs.com'})._id);
 
   //Creates projects
@@ -49,19 +49,19 @@ const addProjects = function (req, res, db) {
     name: 'Proyecto 1',
     description: 'Proyecto para Nike',
     start_date: new Date('Jun 15, 2017'),
-    end_date: new Date('Ago 15, 2017'),
+    end_date: new Date('Aug 15, 2017'),
     client: clientNikeId,
     lead: userLeadId,
     skills: [{
       skill: skillJavascriptId,
       amount: 2,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 15, 2017')
+      end_date: new Date('Aug 15, 2017')
     },{
       skill: skillJenkinsId,
       amount: 1,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 10, 2017')
+      end_date: new Date('Aug 10, 2017')
     }],
     employees: []
   },{
@@ -69,28 +69,28 @@ const addProjects = function (req, res, db) {
     name: 'Proyecto 2',
     description: 'Proyecto 2 para Nike',
     start_date: new Date('Jun 15, 2017'),
-    end_date: new Date('Ago 15, 2017'),
+    end_date: new Date('Aug 15, 2017'),
     client: clientNikeId,
     //lead: userLeadId,
     skills: [{
       skill: skillJavascriptId,
       amount: 2,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 15, 2017')
+      end_date: new Date('Aug 15, 2017')
     },{
       skill: skillJenkinsId,
       amount: 1,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 10, 2017')
+      end_date: new Date('Aug 10, 2017')
     }],
     employees: [{
       user: userDiegoId,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 15, 2017')
+      end_date: new Date('Aug 15, 2017')
     },{
       user: userJonId,
       start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Ago 15, 2017')
+      end_date: new Date('Aug 15, 2017')
     }]
   }], function (err, project) {
     if (err) {
@@ -102,15 +102,12 @@ const addProjects = function (req, res, db) {
 
   Q.allSettled([projectDefer.promise]).then(function (results) {
     console.log('---- Projects Added ----');
-    console.log(results);
 
     _(results).each((result) => {
       db['project'] = result.value;
     });
 
-    //, projectDefer.promise
     res.status(200).send(db);
-
   });
 
 };
@@ -131,9 +128,9 @@ const addUsers = function (req, res, db) {
       skill3dModelingId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === '3D Modeling'})._id);
 
   //Getting recently inserted Role IDs
-  let roleRRHHId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'RRHH'})._id),
+  let roleHRId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'HR'})._id),
       roleLeadId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'Lead'})._id),
-      roleProgramadorId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'Programador'})._id),
+      roleProgrammerId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'Programmer'})._id),
       roleAdminId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'Admin'})._id);
 
   //Creates users
@@ -169,7 +166,7 @@ const addUsers = function (req, res, db) {
       start_date: new Date('Mar 10, 2010'),
       end_date: new Date('Jun 15, 2012')
     }],
-    roles: [roleLeadId, roleProgramadorId]
+    role: roleProgrammerId
   },{
     status: statusActivoId,
     file_number: 124,
@@ -196,7 +193,7 @@ const addUsers = function (req, res, db) {
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date()
     }],
-    roles: [roleAdminId]
+    role: roleAdminId
   },{
     status: statusActivoId,
     file_number: 125,
@@ -223,21 +220,21 @@ const addUsers = function (req, res, db) {
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date()
     }],
-    roles: [roleProgramadorId]
+    role: roleProgrammerId
   },{
     status: statusActivoId,
     file_number: 126,
-    name: 'RRHH Dude',
+    name: 'HR Dude',
     pid_type: 'LU',
     pid_number: 000000,
     address: 'Calle Cuatro 123',
     phone: 123123123,
-    email: 'rrhh@tbs.com',
+    email: 'hr@tbs.com',
     password: '123',
     interests: 'Human Resources',
     skills: [],
     experience: [],
-    roles: [roleRRHHId]
+    role: roleHRId
   },{
     status: statusActivoId,
     file_number: 127,
@@ -256,7 +253,7 @@ const addUsers = function (req, res, db) {
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date('Jun 15, 2013')
     }],
-    roles: [roleLeadId]
+    role: roleLeadId
   }], function (err, user) {
     if (err) {
       userDefer.reject(err);
@@ -266,7 +263,6 @@ const addUsers = function (req, res, db) {
 
   Q.allSettled([userDefer.promise]).then(function (results) {
     console.log('---- Users Added ----');
-    console.log(results);
 
     _(results).each((result) => {
       db['user'] = result.value;
@@ -290,20 +286,20 @@ const secondaryTables = function (req, res, db) {
   //roleDefer.resolve();
 
   Role.insertMany([{
-    name: 'RRHH',
-    description: 'Usuario de Recursos Humanos',
+    name: 'HR',
+    description: 'Human Resources',
     tasks: [taskCreateProjectId]
   },{
     name: 'Lead',
-    description: 'Lider de Proyecto',
+    description: 'Project Lead',
     tasks: [taskManageProjectId, taskEvaluateSkillsId]
   },{
     name: 'Admin',
-    description: 'Administrador de la aplicación',
+    description: 'TBS App Administrator',
     tasks: [taskManageProjectId, taskManageSkillsId]
   },{
-    name: 'Programador',
-    description: 'Usuario Programador',
+    name: 'Programmer',
+    description: 'Software Developer',
     tasks: []
   }], function (err, role) {
     if (err) {

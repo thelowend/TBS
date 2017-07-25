@@ -28,7 +28,7 @@
       interests: { type: String, required: false },
       skills: [UserSkillSchema],
       experience: [UserExperienceSchema],
-      roles: { type: Array, required: false }
+      role: { type: Schema.Types.ObjectId, ref: 'Role', required: true }
     });
 
     module.exports = mongoose.model('User', UserSchema);

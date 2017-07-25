@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jwt-simple');
 const moment = require('moment');
+const _ = require('underscore');
 
 // load the User model
 const User = require('../models/user');
@@ -60,8 +61,9 @@ module.exports = {
 			};
 
 			if (req.body.password === user.password) {
-				console.log(req.body, user.password);
+
 				res.send({
+					info: _.omit(user, 'password'),
 					token: createToken(user)
 				});
 			} else {

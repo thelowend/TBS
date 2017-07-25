@@ -1,7 +1,16 @@
 ﻿export class User {
-    id: number;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
+    _id: number;
+    status: Object;
+    file_number: number;
+    name: string;
+    pid_type: string;
+    pid_number: number;
+    address: string;
+    phone: string;
+    email: string;
+    //password: string;
+    interests: string;
+    skills: Array<Object>;
+    experience: Array<Object>;
+    roles: Array<Object>;
 }

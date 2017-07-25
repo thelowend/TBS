@@ -19,11 +19,6 @@ import { NavbarComponent, ManageSkillsComponent, AlertComponent, HomeComponent, 
 // Guards
 import { AuthGuard } from './_guards/index';
 
-// Backend
-import { fakeBackendProvider } from './_helpers/index';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions } from '@angular/http';
-
 
 @NgModule({
   declarations: [
@@ -52,12 +47,7 @@ import { BaseRequestOptions } from '@angular/http';
     AuthGuard,
     AlertService,
     AuthenticationService,
-    UserService,
-
-    // providers used to create fake backend
-    fakeBackendProvider,
-    MockBackend,
-    BaseRequestOptions
+    UserService
   ],
   bootstrap: [AppComponent]
 })
