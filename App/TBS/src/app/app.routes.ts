@@ -6,14 +6,14 @@ const APP_ROUTES: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'manage-skills', component: ManageSkillsComponent },
-  { path: 'search', component: SearchComponent },
-  { path: 'reports', component: ReportsComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'clients', component: ClientsComponent },
-  { path: 'projects', component: ProjectsComponent },
-  { path: 'roles', component: RolesComponent },
-  { path: 'team', component: TeamComponent },
+  { path: 'manage-skills', component: ManageSkillsComponent, canActivate: [AuthGuard] },
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard] },
+  { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'clients', component: ClientsComponent, canActivate: [AuthGuard] },
+  { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
+  { path: 'roles', component: RolesComponent, canActivate: [AuthGuard] },
+  { path: 'team', component: TeamComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

@@ -1,8 +1,8 @@
-<div class="row">
-  <div class="col-4">
-    <img src="/assets/brand/tbs.png" width="100%" class="" alt="">
+<div class="row top-row">
+  <div class="col-4 user-picture">
+    <i class="fa fa-user-secret" aria-hidden="true"></i>
   </div>
-  <div class="col-8 float-left">
+  <div class="col-8">
       <h1>{{currentUser.info.name}}</h1>
       <h2>{{currentUser.info.role.description}}</h2>
       <p>{{currentUser.info.experience[0].description}}</p>
@@ -18,7 +18,28 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-12">
-    <span>Acá va la tablita de skills</span>
+  <div class="col-8">
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Skill</th>
+          <th>Score</th>
+          <th>Verified</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let skill of currentUser.info.skills; let i = index">
+          <td>{{skill.skill.description}}</td>
+          <!--td>{{skill.level}}/10</td-->
+          <td>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [ngStyle]="{width: skill.level/10 | percent:'1.0-1'}" [attr.aria-valuenow]="skill.level" aria-valuemin="0" aria-valuemax="10">{{skill.level}}/10</div>
+            </div>
+          </td>
+          <td><i class="fa" [ngClass]="skill.verified ? 'fa-check' : 'fa-times'" aria-hidden="true"></i></td>
+        </tr>
+      </tbody>
+    </table>
+    <p></p>
   </div>
 </div>

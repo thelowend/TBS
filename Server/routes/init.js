@@ -148,11 +148,11 @@ const addUsers = function (req, res, db) {
     interests: 'Basketball, Animals',
     skills: [{
       skill: skillJavascriptId,
-      level: 4,
+      level: 9,
       verified: true
     },{
       skill: skillJenkinsId,
-      level: 4,
+      level: 6,
       verified: false
     }],
     experience: [{
@@ -180,11 +180,11 @@ const addUsers = function (req, res, db) {
     interests: 'Snow, Swords',
     skills: [{
       skill: skill3dModelingId,
-      level: 2,
+      level: 6,
       verified: false
     },{
       skill: skillJavaId,
-      level: 4,
+      level: 8,
       verified: false
     }],
     experience: [{
@@ -207,11 +207,11 @@ const addUsers = function (req, res, db) {
     interests: 'Not Many',
     skills: [{
       skill: skillJavascriptId,
-      level: 3,
+      level: 7,
       verified: true
     },{
       skill: skillJavaId,
-      level: 3,
+      level: 7,
       verified: false
     }],
     experience: [{

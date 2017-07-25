@@ -1,0 +1,28 @@
+@import "_variables.scss";
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+.options p {
+  margin-bottom: 0;
+}
+.btn {
+  &:hover {
+    cursor: pointer;
+  }
+}
+.btn-primary {
+  background-color: $color-red;
+  border-color: $color-red;
+  &:hover {
+    background-color: $color-red;
+    border-color: $color-red;
+    opacity: .8;
+  }
+}
+
+.progress {
+  background: #ccc;
+}

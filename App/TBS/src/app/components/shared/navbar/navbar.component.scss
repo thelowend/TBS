@@ -1,0 +1,23 @@
+@import "../../../../assets/scss/_variables.scss";
+.navbar {
+  padding: 0 0 0 1rem;
+}
+:focus {
+  outline: none;
+}
+
+.nav-item {
+
+  &.active, &.logout {
+    background: $color-red;
+  }
+
+  &.logout {
+    .nav-link {
+      color: black;
+      &:hover {
+          color: white;
+      }
+    }
+  }
+}

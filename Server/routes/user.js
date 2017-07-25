@@ -60,8 +60,10 @@ module.exports = {
 	},
 	login: function (req, res) {
 		Q(User.findOne({ email: req.body.email })
+			.populate('skills.skill')
 			.populate('status')
-			.populate('role').exec()).then(function(user) {
+			.populate('role')
+			.exec()).then(function(user) {
 				if (!user) {
 					return res.status(401).send({ message: 'email/password is invalid'});
 				};
