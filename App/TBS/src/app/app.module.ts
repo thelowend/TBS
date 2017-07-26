@@ -12,6 +12,7 @@ import { AlertService, AuthenticationService, UserService, SkillService } from '
 //---------------- Components ----------------//
 // App
 import { AppComponent } from './app.component';
+import { DatePickerModule } from 'ng2-datepicker';
 
 // Sections
 import { NavbarComponent, ManageSkillsComponent, AlertComponent, HomeComponent, LoginComponent, RegisterComponent, SearchComponent, ReportsComponent, UsersComponent, ClientsComponent, ProjectsComponent, RolesComponent, TeamComponent } from './components/index';
@@ -41,7 +42,8 @@ import { AuthGuard } from './_guards/index';
     BrowserModule,
     FormsModule,
     HttpModule,
-    APP_ROUTING
+    APP_ROUTING,
+    DatePickerModule
   ],
   providers: [
     AuthGuard,

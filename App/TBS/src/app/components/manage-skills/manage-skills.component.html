@@ -12,7 +12,7 @@
               <!--small [hidden]="skillForm.controls.book_id.valid">
                 book not selected</small-->
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button" [disabled]="!skillExists" (click)="selectSkill()">Select Skill</button>
+                <button class="btn btn-primary btn-select-skill" type="button" [disabled]="!skillExists" (click)="selectSkill(inputSkillName)">Select Skill</button>
               </span>
 
               <span class="input-group-btn">
@@ -24,7 +24,7 @@
           </div>
           <div class="col-4">
             <div class="form-group d-flex flex-end">
-                <button class="btn btn-primary" [disabled]="skillExists"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
+                <button class="btn btn-primary" [disabled]="skillExists || !inputSkillName"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
             </div>
           </div>
         </div>
@@ -50,9 +50,9 @@
             </div>
           </div>
           <div class="col-4">
-            <div class="form-group d-flex flex-end">
+            <div class="form-group d-flex flex-end form-buttons">
               <button class="btn btn-primary" [disabled]="!skillSelected" (click)="saveSkill()"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
-              <button class="btn btn-primary" [disabled]="!skillSelected"><i class="fa fa-cancel" aria-hidden="true"></i> Cancel</button>
+              <button class="btn btn-primary btn-cancel" [disabled]="!skillSelected" (click)="cancelSkill()">Cancel</button>
             </div>
           </div>
         </div>
@@ -92,17 +92,19 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="currentUser.info.skills.length < 1">
+          <td colspan="3">There are no current skills associated with {{currentUser.info.name}}.</td>
+        </tr>
         <tr *ngFor="let skill of currentUser.info.skills; let i = index">
           <td>{{skill.skill.description}}</td>
-          <!--td>{{skill.level}}/10</td-->
           <td>
             <div class="progress">
               <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" [ngStyle]="{width: skill.level/10 | percent:'1.0-1'}" [attr.aria-valuenow]="skill.level" aria-valuemin="0" aria-valuemax="10">{{skill.level}}/10</div>
             </div>
           </td>
           <td>
-            <a class="action-link"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            <a class="action-link"><i class="fa fa-trash" aria-hidden="true"></i></a>
+            <button class="action-link" (click)="selectUserSkill($event.currentTarget.value)" [value]="skill.skill._id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button class="action-link" (click)="removeUserSkill($event.currentTarget.value)" [value]="skill.skill._id"><i class="fa fa-trash" aria-hidden="true"></i></button>
           </td>
         </tr>
       </tbody>

@@ -8,3 +8,23 @@
     font-size: 15rem;
   }
 }
+
+ul.options {
+  list-style: none;
+  padding-left: 0;
+  li {
+    margin-bottom: .2rem;
+    .nav-link {
+      padding: 0;
+      color: $color-red;
+      &:hover {
+        opacity: .8;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+.textarea-interests {
+  width: 100%;
+  border-radius: 3px;
+}

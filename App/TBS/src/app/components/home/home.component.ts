@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 
 import { User } from '../../_models/index';
 import { UserService } from '../../_services/index';
@@ -10,8 +11,12 @@ import { UserService } from '../../_services/index';
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentUser: any;
     users: User[] = [];
+    inputInterests: String;
+    start_date: DateModel;
+    end_date: DateModel;
+    options: DatePickerOptions;
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -20,6 +25,16 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         //this.loadAllUsers();
+        this.inputInterests = this.currentUser.info.interests;
+        this.options = new DatePickerOptions();
+    }
+
+    editResume() {
+
+    }
+
+    saveInterests() {
+      console.log(this.inputInterests);
     }
 
     deleteUser(id: number) {

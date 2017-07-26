@@ -28,9 +28,9 @@ export class ManageSkillsComponent implements OnInit {
       this.loadAllSkills();
       this.currentSkill = new Skill();
       this.currentUserSkill = new UserSkill();
-      this.skillExists = true;
+      this.skillExists = false;
       this.skillSelected = false;
-      this.inputSkillLevel = 1;
+      this.inputSkillLevel = 5;
   }
 
   onSkillNameChange(value: String) {
@@ -43,14 +43,20 @@ export class ManageSkillsComponent implements OnInit {
     this.currentUserSkill.level = value;
   }
 
-  selectSkill() {
-    if (this.inputSkillName) {
-      this.currentSkill = this.skills.find(x => x.name.toLowerCase() == this.inputSkillName.toLowerCase());
+  selectSkill(skillname:String) {
+      this.currentSkill = this.skills.find(x => x.name.toLowerCase() == skillname.toLowerCase());
       this.skillSelected = true;
       this.currentUserSkill.skill = this.currentSkill;
       this.currentUserSkill.level = this.inputSkillLevel;
       this.currentUserSkill.verified = false;
-    }
+  }
+
+  selectUserSkill(skillId:Number) {
+    this.currentUserSkill = this.currentUser.info.skills.find((usrSkill:UserSkill) => usrSkill.skill._id == skillId);
+    this.currentUserSkill.verified = false;
+    this.inputSkillLevel = this.currentUserSkill.level;
+    this.currentSkill = this.currentUserSkill.skill;
+    this.skillSelected = true;
   }
 
   saveSkill() {
@@ -76,15 +82,35 @@ export class ManageSkillsComponent implements OnInit {
     });
   }
 
-  deleteSkill(id: number) {
-      //this.skillService.delete(id).subscribe(() => { this.loadAllSkills() });
+  removeUserSkill(skillId: Number) {
+    let updatedUserInfo = this.currentUser.info;
+    let foundFlag = false;
+
+    for (let i = 0; !foundFlag && (i < updatedUserInfo.skills.length); i++) {
+      if (updatedUserInfo.skills[i].skill._id === skillId) {
+        //console.log(updatedUserInfo.skills);
+        console.log(updatedUserInfo);
+        updatedUserInfo.skills.splice(i, 1);
+        console.log(updatedUserInfo);
+        foundFlag = true;
+      }
+    }
+    this.userService.update(updatedUserInfo).subscribe(result => {
+      if (!result.err) {
+        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      }
+      location.reload();
+    });
+  }
+
+  cancelSkill() {
+    location.reload();
   }
 
   private loadAllSkills() {
       this.skillService.getAll().subscribe(skills => {
         this.skills = skills;
       });
-
   }
 
 }

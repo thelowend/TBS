@@ -25,6 +25,19 @@
   margin-top: 1rem;
 }
 
+.form-buttons {
+  button {
+    margin: 0 0 0 .5rem;
+    &.btn-cancel {
+      padding-left: .5rem;
+      padding-right: .5rem;
+    }
+  }
+}
+
+.btn-select-skill {
+  border-radius: 0 6px 6px 0;
+}
 // Styling Cross-Browser Compatible Range Inputs with Sass
 // Github: https://github.com/darlanrod/input-range-sass
 // Author: Darlan Rod https://github.com/darlanrod

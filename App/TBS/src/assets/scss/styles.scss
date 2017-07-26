@@ -4,10 +4,6 @@ html, body {
   height: 100%;
   width: 100%;
 }
-
-.options p {
-  margin-bottom: 0;
-}
 .btn {
   &:hover {
     cursor: pointer!important;
@@ -22,9 +18,9 @@ html, body {
     opacity: .8;
   }
   &.disabled, &:disabled {
-    background-color: $color-red;
-    border-color: $color-red;
-    opacity: .6;
+    background-color: $color-red!important;
+    border-color: $color-red!important;
+    opacity: .6!important;
   }
 }
 
@@ -53,4 +49,8 @@ html, body {
 
 .row-disabled {
   opacity: .6;
+}
+
+.modal-dialog {
+  max-width: 70%;
 }

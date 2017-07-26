@@ -15,10 +15,18 @@ export class User {
     skills: Array<UserSkill>;
     experience: Array<Object>;
     roles: Array<Object>;
+    projects: Array<Object>;
 }
 
 export class UserSkill {
     skill: Skill;
     level: Number;
     verified: Boolean;
+}
+
+export class UserExperience {
+  employer: String;
+  description: String;
+  start_date: Date;
+  end_date: Date;
 }

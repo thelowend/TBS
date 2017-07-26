@@ -5,16 +5,13 @@
   <div class="col-4">
       <h1>{{currentUser.info.name}}</h1>
       <h2>{{currentUser.info.role.description}}</h2>
-      <p>{{currentUser.info.experience[0].description}}</p>
-      <div class="options">
-        <p><a>Update Password</a></p>
-        <p><a>Resume</a></p>
-      </div>
-  </div>
-</div>
-<div class="row justify-content-center">
-  <div class="col-8">
-    <p>Acá van las sugerencias</p>
+      <p *ngIf="currentUser.info.experience.length > 0">{{currentUser.info.experience[0].description}}</p>
+      <ul class="options">
+        <li><a class="nav-link" data-toggle="modal" data-target="#detailedInfoModal">Details</a></li>
+        <li><a class="nav-link" data-toggle="modal" data-target="#resumeModal">Resumé</a></li>
+        <li><b>Interests:</b> <span>{{currentUser.info.interests || 'No Interests Found'}} </span><a data-toggle="modal" data-target="#interestsModal"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
+        <li><b>Latest Projects:</b> <span>{{currentUser.info.projects || 'No Projects Found'}}</span></li>
+      </ul>
   </div>
 </div>
 <div class="row justify-content-center">
@@ -28,6 +25,9 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="currentUser.info.skills.length < 1">
+          <td colspan="3">There are no current skills associated with {{currentUser.info.name}}.</td>
+        </tr>
         <tr *ngFor="let skill of currentUser.info.skills; let i = index">
           <td>{{skill.skill.description}}</td>
           <!--td>{{skill.level}}/10</td-->
@@ -41,5 +41,183 @@
       </tbody>
     </table>
     <p></p>
+  </div>
+</div>
+
+<!-- Resumé Modal -->
+<div class="modal fade" id="resumeModal" tabindex="-1" role="dialog" aria-labelledby="resumeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Resumé</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+        <div class="row justify-content-center">
+          <div class="abm-form col-10">
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon1">Employer</span>
+                  <input type="text" class="form-control" placeholder="Employer Name..." aria-describedby="basic-addon1">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="input-group">
+                  <span class="input-group-addon" id="basic-addon2">Description</span>
+                  <input type="text" class="form-control" placeholder="Job Description..." aria-describedby="basic-addon2">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <ng2-datepicker [options]="options" [(ngModel)]="start_date"></ng2-datepicker>
+              </div>
+              <div class="col-6">
+                <ng2-datepicker [options]="options" [(ngModel)]="end_date"></ng2-datepicker>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <div class="form-group row">
+              <div class="col-12">
+                <table *ngIf="currentUser.info.experience" class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Employer</th>
+                      <th>Role</th>
+                      <th>Dates</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="currentUser.info.experience.length < 1">
+                      <td colspan="4">There are no job experiences associated with {{currentUser.info.name}}.</td>
+                    </tr>
+                    <tr *ngFor="let exp of currentUser.info.experience">
+                      <td>{{exp.employer}}</td>
+                      <td>{{exp.description}}</td>
+                      <td>{{exp.start_date | date: 'dd/MM/yyyy'}} - {{exp.end_date | date: 'dd/MM/yyyy' || 'ongoing'}}</td>
+                      <td>{{exp.description}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detailed Info Modal -->
+<div class="modal fade" id="detailedInfoModal" tabindex="-1" role="dialog" aria-labelledby="detailedInfoModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Personal Info</h5>
+      </div>
+      <div class="modal-body container">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">File Number:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.file_number || 'Info Not Found'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.name || 'Info Not Found'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">PID:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.pid_type || 'Info Not Found'}} {{currentUser.info.pid_number || ''}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Address:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.address || 'Info Not Found'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.phone || 'Info Not Found'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group row">
+              <label for="example-text-input" class="col-2 col-form-label">E-Mail:</label>
+              <div class="col-10">
+                <p class="form-control-static">{{currentUser.info.email || 'Info Not Found'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Interests Modal -->
+<div class="modal fade" id="interestsModal" tabindex="-1" role="dialog" aria-labelledby="interestsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Interests</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+        <div class="row">
+          <div class="col-12">
+            <textarea class="textarea-interests" [(ngModel)]="inputInterests" maxlength="300">{{inputInterests}}</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveInterests()" >Save changes</button>
+      </div>
+    </div>
   </div>
 </div>
