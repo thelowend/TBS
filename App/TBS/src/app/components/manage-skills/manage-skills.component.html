@@ -7,39 +7,53 @@
         <div class="row">
           <div class="col-8">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Skill to search...">
+              <input list="skill_list" type="text" class="form-control" placeholder="Skill to search..." [ngModel]="inputSkillName" (ngModelChange)="onSkillNameChange($event)">
+              <!--display error message if book_id is not valid-->
+              <!--small [hidden]="skillForm.controls.book_id.valid">
+                book not selected</small-->
               <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Select Skill</button>
+                <button class="btn btn-secondary" type="button" [disabled]="!skillExists" (click)="selectSkill()">Select Skill</button>
+              </span>
+
+              <span class="input-group-btn">
+                <datalist id="skill_list">
+                    <option *ngFor="let skill of skills" [ngValue]="skill._id">{{skill.name}}</option>
+                </datalist>
               </span>
             </div>
           </div>
           <div class="col-4">
             <div class="form-group d-flex flex-end">
-                <button class="btn btn-primary"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
+                <button class="btn btn-primary" [disabled]="skillExists"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12">
+        <div class="row" [ngClass]="!skillSelected?'row-disabled':''">
+          <div class="col-8">
             <div class="form-group row">
               <label for="example-text-input" class="col-2 col-form-label">Skill:</label>
               <div class="col-10">
-                <p class="form-control-static">Skill Name</p>
+                <p class="form-control-static">{{currentSkill.description || ''}}</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" [ngClass]="!skillSelected?'row-disabled':''">
           <div class="col-8">
             <div class="form-group row">
               <label for="example-text-input" class="col-2 col-form-label">Score:</label>
               <div class="col-10">
-                <p class="form-control-static">Skill Level</p>
+                <p class="form-control-static">
+                  <input type="range" min="1" max="10" step="1" class="range-skill" [ngModel]="inputSkillLevel" [value]="inputSkillLevel" [disabled]="!skillSelected" (change)="updateSkillScore($event.target.value)" />
+                </p>
               </div>
             </div>
           </div>
           <div class="col-4">
-
+            <div class="form-group d-flex flex-end">
+              <button class="btn btn-primary" [disabled]="!skillSelected" (click)="saveSkill()"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
+              <button class="btn btn-primary" [disabled]="!skillSelected"><i class="fa fa-cancel" aria-hidden="true"></i> Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -69,7 +83,7 @@
 </div>
 <div class="row">
   <div class="col-8">
-    <table class="table table-striped">
+    <table class="table table-striped table-userskills">
       <thead class="thead-inverse">
         <tr>
           <th>Skill</th>

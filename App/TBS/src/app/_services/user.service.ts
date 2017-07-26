@@ -1,5 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { environment } from '../../environments/environment';
 
 import { User } from '../_models/index';
 
@@ -9,21 +10,21 @@ export class UserService {
 
     getAll() {
         alert('getall');
-        return this.http.get('/api/user', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(environment.api + '/api/user', this.jwt()).map((response: Response) => response.json());
     }
 
     getById(id: number) {
         alert('getbyID');
         console.log(id);
-        return this.http.get('/api/user/' + id, this.jwt()).map((response: Response) => response.json());
+        return this.http.get(environment.api + '/api/user/' + id, this.jwt()).map((response: Response) => response.json());
     }
 
     create(user: User) {
-        return this.http.post('/api/user', user, this.jwt()).map((response: Response) => response.json());
+        return this.http.put(environment.api + '/api/user', user, this.jwt()).map((response: Response) => response.json());
     }
 
     update(user: User) {
-        return this.http.put('/api/user/' + user._id, user, this.jwt()).map((response: Response) => response.json());
+        return this.http.post(environment.api + '/api/user', user, this.jwt()).map((response: Response) => response.json());
     }
 
     delete(id: number) {
@@ -31,7 +32,6 @@ export class UserService {
     }
 
     // private helper methods
-
     private jwt() {
         // create authorization header with jwt token
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));

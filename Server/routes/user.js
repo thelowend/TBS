@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const jwt = require('jwt-simple');
 const moment = require('moment');
 const Q = require('q');
@@ -33,8 +34,29 @@ module.exports = {
     }
 		*/
   },
+	post: function (req, res) {
+		//code to insert user
+		console.log('------------ POST USER -------------');
+		User.findOne({ _id: req.body._id }, (err, usr) => {
+			usr.skills = req.body.skills;
+			usr.save(function (err, newUser) {
+				if (err) {
+					res.send(err);
+				}
+				res.status(200).send({ response: 'User Updated!' });
+			});
+		});
+	},
   put: function (req, res) {
-    //code to insert user
+    //code to update user
+		console.log('------------ PUT USER -------------');
+		/*
+		User.findOneAndUpdate({ _id: Schema.Types.ObjectId(req.body._id) }, { $set: { skills: req.body.skills }}, { upsert: true }, function(err, doc) {
+    if (err) return res.send(500, { error: err });
+			console.log(err, doc);
+    	return res.send(doc);
+		});
+		*/
     res.status(200).send('PUT User');
   },
 	delete: function (req, res) {

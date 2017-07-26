@@ -10,7 +10,7 @@ html, body {
 }
 .btn {
   &:hover {
-    cursor: pointer;
+    cursor: pointer!important;
   }
 }
 .btn-primary {
@@ -20,6 +20,11 @@ html, body {
     background-color: $color-red;
     border-color: $color-red;
     opacity: .8;
+  }
+  &.disabled, &:disabled {
+    background-color: $color-red;
+    border-color: $color-red;
+    opacity: .6;
   }
 }
 
@@ -44,4 +49,8 @@ html, body {
 }
 .action-link {
   padding: 0 .5rem;
+}
+
+.row-disabled {
+  opacity: .6;
 }

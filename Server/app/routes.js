@@ -27,6 +27,7 @@ module.exports = (app) => {
 
     // Users
     app.get('/api/user', checkAuth, checkPermissions, RouteUser.get);
+    app.post('/api/user', checkAuth, checkPermissions, RouteUser.post);
     app.put('/api/user', checkAuth, checkPermissions, RouteUser.put);
     app.delete('/api/user', checkAuth, checkPermissions, RouteUser.delete);
 

@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 import { APP_ROUTING } from './app.routes';
 
 //---------------- Services ----------------//
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, SkillService } from './_services/index';
 
 //---------------- Components ----------------//
 // App
@@ -47,7 +47,8 @@ import { AuthGuard } from './_guards/index';
     AuthGuard,
     AlertService,
     AuthenticationService,
-    UserService
+    UserService,
+    SkillService
   ],
   bootstrap: [AppComponent]
 })
