@@ -226,7 +226,7 @@ const addUsers = function (req, res, db) {
     file_number: 126,
     name: 'HR Dude',
     pid_type: 'LU',
-    pid_number: 000000,
+    pid_number: 4564567,
     address: 'Calle Cuatro 123',
     phone: 123123123,
     email: 'hr@tbs.com',
