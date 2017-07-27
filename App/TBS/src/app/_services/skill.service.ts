@@ -11,7 +11,9 @@ export class SkillService {
     getAll() {
         return this.http.get(environment.api + '/api/skill', this.jwt()).map((response: Response) => response.json());
     }
-
+    getByStatus(status:String) {
+        return this.http.get(environment.api + '/api/skill/' + status, this.jwt()).map((response: Response) => response.json());
+    }
     getById(id: number) {
         console.log(id);
         return this.http.get(environment.api + '/api/skill/' + id, this.jwt()).map((response: Response) => response.json());

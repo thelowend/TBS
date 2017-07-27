@@ -201,6 +201,35 @@
           </div>
         </div>
       </div>
+      <div class="modal-header">
+        <h5 class="modal-title">Resumé</h5>
+      </div>
+      <div class="modal-body container">
+        <div class="row">
+          <div class="col-12">
+            <table *ngIf="currentUser.info.experience" class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>Employer</th>
+                  <th>Role</th>
+                  <th>Dates</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="currentUser.info.experience.length < 1">
+                  <td colspan="3">There are no job experiences associated with {{currentUser.info.name}}.</td>
+                </tr>
+                <tr *ngFor="let exp of currentUser.info.experience; let i = index">
+                  <td>{{exp.employer}}</td>
+                  <td>{{exp.description}}</td>
+                  <td>{{exp.start_date | date: 'dd/MM/yyyy'}} - {{exp.end_date | date: 'dd/MM/yyyy' || 'ongoing'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>

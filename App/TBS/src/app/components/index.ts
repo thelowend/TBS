@@ -11,3 +11,4 @@ export * from './clients/clients.component';
 export * from './projects/projects.component';
 export * from './roles/roles.component';
 export * from './team/team.component';
+export * from './skills/skills.component';

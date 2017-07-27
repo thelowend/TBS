@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User, Skill, UserSkill } from '../../_models/index';
 import { UserService, SkillService } from '../../_services/index';
 
+import * as _ from "lodash";
+
 @Component({
   moduleId: module.id,
   selector: 'app-manage-skills',
@@ -119,7 +121,7 @@ export class ManageSkillsComponent implements OnInit {
   }
 
   private loadAllSkills() {
-      this.skillService.getAll().subscribe(skills => {
+      this.skillService.getByStatus('Activo').subscribe(skills => {
         this.skills = skills;
       });
   }

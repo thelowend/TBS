@@ -2,7 +2,7 @@
 import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 
 import { User, UserExperience } from '../../_models/index';
-import { UserService } from '../../_services/index';
+import { UserService, ProjectService } from '../../_services/index';
 import * as moment from 'moment';
 import * as _ from "lodash";
 
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     JSON: any;
     invalidExperienceMessage: string;
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService, projectService: ProjectService) {
         this.JSON = JSON;
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }

@@ -1,5 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent, LoginComponent, RegisterComponent, ManageSkillsComponent, SearchComponent, ReportsComponent, UsersComponent, ClientsComponent, ProjectsComponent, RolesComponent, TeamComponent } from './components/index';
+import { HomeComponent, LoginComponent, RegisterComponent, ManageSkillsComponent, SearchComponent, ReportsComponent, UsersComponent, ClientsComponent, ProjectsComponent, RolesComponent, TeamComponent, SkillsComponent } from './components/index';
 import { AuthGuard } from './_guards/index';
 
 const APP_ROUTES: Routes = [
@@ -14,6 +14,7 @@ const APP_ROUTES: Routes = [
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard] },
   { path: 'roles', component: RolesComponent, canActivate: [AuthGuard] },
   { path: 'team', component: TeamComponent, canActivate: [AuthGuard] },
+  { path: 'skills', component: SkillsComponent, canActivate: [AuthGuard] },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 
