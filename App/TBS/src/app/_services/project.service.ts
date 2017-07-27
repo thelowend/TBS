@@ -8,8 +8,12 @@ import { Project } from '../_models/index';
 export class ProjectService {
     constructor(private http: Http) { }
 
-    getAll() {
-        return this.http.get(environment.api + '/api/project', this.jwt()).map((response: Response) => response.json());
+    getAll(start_date:string, end_date:string) {
+        if(start_date && end_date){
+            return this.http.get(environment.api + '/api/project?start_date='+start_date+'&end_date='+end_date, this.jwt()).map((response: Response) => response.json());
+        } else {
+            return this.http.get(environment.api + '/api/project', this.jwt()).map((response: Response) => response.json());
+        }
     }
     getByStatus(status:String) {
         return this.http.get(environment.api + '/api/project/' + status, this.jwt()).map((response: Response) => response.json());

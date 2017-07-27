@@ -92,10 +92,7 @@ export class ManageSkillsComponent implements OnInit {
 
     for (let i = 0; !foundFlag && (i < updatedUserInfo.skills.length); i++) {
       if (updatedUserInfo.skills[i].skill._id === skillId) {
-        //console.log(updatedUserInfo.skills);
-        console.log(updatedUserInfo);
         updatedUserInfo.skills.splice(i, 1);
-        console.log(updatedUserInfo);
         foundFlag = true;
       }
     }

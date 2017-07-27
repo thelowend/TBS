@@ -4,8 +4,32 @@
   </div>
 </div>
 <div class="row top-row justify-content-center">
-  <div class="col-12">
-    <p>Menu Options</p>
+  <div class="col-3">
+    <div class="form-group form-check-inline">
+      <label for="inputStartDate">From:</label>
+      <ng2-datepicker id="inputStartDate" [options]="datepickerOptions" [(ngModel)]="filter.start_date"></ng2-datepicker>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="form-group form-check-inline">
+      <label for="inputStartDate">To:</label><br/>
+      <ng2-datepicker id="inputEndDate" [options]="datepickerOptions" [(ngModel)]="filter.end_date"></ng2-datepicker>
+    </div>
+  </div>
+  <div class="col-3">
+
+    <div class="form-group form-check-inline">
+      <label class="form-check-label" *ngFor="let entry of entries;let idx = index">
+      <input type="radio" name="radiogroup"
+           [checked]="idx === 0"
+           [value]="entry"
+           (change)="onSelectionChange(entry)"> {{entry}}
+      </label>
+    </div>
+  </div>
+  <div class="col-3">
+    <button type="submit" class="btn btn-primary" (click)="filterProjects()"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
+    <button type="submit" class="btn btn-primary" (click)="newProject()"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
   </div>
 </div>
 <div class="row justify-content-center">
@@ -23,16 +47,16 @@
       </thead>
       <tbody>
         <tr *ngIf="projects.length < 1">
-          <td colspan="5">There are no current projects associated with {{currentUser.info.name}}.</td>
+          <td colspan="6">There are no current projects for that query.</td>
         </tr>
         <tr *ngFor="let project of projects; let i = index">
           <td>{{project.name}}</td>
-          <td>{{project.description}}</td>
-          <td>{{project.status.name}}</td>
-          <td>{{project.lead.name}}</td>
+          <td>{{project.description || ''}}</td>
+          <td>{{project.status.name || ''}}</td>
+          <td>{{ project.lead?project.lead.name:'' }}</td>
           <td>{{project.start_date | date: 'dd/MM/yyyy'}} - {{project.end_date | date: 'dd/MM/yyyy'}}</td>
           <td>
-            <button class="action-link" (click)="selectUserSkill($event.currentTarget.value)" [value]="project.id"><i class="fa fa-users" aria-hidden="true"></i></button>
+            <button class="action-link" (click)="buildTeam($event.currentTarget.value)" [value]="project.id"><i class="fa fa-users" aria-hidden="true"></i></button>
             <button class="action-link" (click)="endProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-window-close" aria-hidden="true"></i></button>
             <button class="action-link" (click)="editProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
             <button class="action-link" (click)="deleteProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-trash" aria-hidden="true"></i></button>
