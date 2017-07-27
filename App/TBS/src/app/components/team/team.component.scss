@@ -1,0 +1,41 @@
+@import "../../../assets/scss/_variables.scss";
+.top-row {
+  padding: 1rem 0 0 0;
+}
+.user-picture {
+  text-align: center;
+  i {
+    font-size: 15rem;
+  }
+}
+.skill-reference {
+  ul {
+    padding-left: 0;
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.range-skill {
+  width: 100%;
+}
+
+.table-userskills {
+  margin-top: 1rem;
+}
+
+.form-buttons {
+  button {
+    margin: 0 0 0 .5rem;
+    &.btn-cancel {
+      padding-left: .5rem;
+      padding-right: .5rem;
+    }
+  }
+}
+
+.justify-content-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}

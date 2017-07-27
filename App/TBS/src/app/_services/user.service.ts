@@ -9,12 +9,10 @@ export class UserService {
     constructor(private http: Http) { }
 
     getAll() {
-        alert('getall');
         return this.http.get(environment.api + '/api/user', this.jwt()).map((response: Response) => response.json());
     }
 
     getById(id: number) {
-        alert('getbyID');
         console.log(id);
         return this.http.get(environment.api + '/api/user/' + id, this.jwt()).map((response: Response) => response.json());
     }

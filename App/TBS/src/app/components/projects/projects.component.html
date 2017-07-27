@@ -17,7 +17,6 @@
     </div>
   </div>
   <div class="col-3">
-
     <div class="form-group form-check-inline">
       <label class="form-check-label" *ngFor="let entry of entries;let idx = index">
       <input type="radio" name="radiogroup"
@@ -30,6 +29,13 @@
   <div class="col-3">
     <button type="submit" class="btn btn-primary" (click)="filterProjects()"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
     <button type="submit" class="btn btn-primary" (click)="newProject()"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+  </div>
+</div>
+<div class="row justify-content-center" *ngIf="!!invalidQuery">
+  <div class="col-12">
+    <div class="alert alert-danger" role="alert">
+      <strong>Error!</strong> {{invalidQueryMessage}}
+    </div>
   </div>
 </div>
 <div class="row justify-content-center">
@@ -56,10 +62,10 @@
           <td>{{ project.lead?project.lead.name:'' }}</td>
           <td>{{project.start_date | date: 'dd/MM/yyyy'}} - {{project.end_date | date: 'dd/MM/yyyy'}}</td>
           <td>
-            <button class="action-link" (click)="buildTeam($event.currentTarget.value)" [value]="project.id"><i class="fa fa-users" aria-hidden="true"></i></button>
-            <button class="action-link" (click)="endProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-window-close" aria-hidden="true"></i></button>
-            <button class="action-link" (click)="editProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-            <button class="action-link" (click)="deleteProject($event.currentTarget.value)" [value]="project.id"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button *ngIf="project.lead && project.lead._id === currentUser.info._id" class="action-link" (click)="buildTeam($event.currentTarget.value)" [value]="project._id"><i class="fa fa-users" aria-hidden="true"></i></button>
+            <button *ngIf="project.lead && project.lead._id === currentUser.info._id" class="action-link" (click)="endProject($event.currentTarget.value)" [value]="project._id"><i class="fa fa-window-close" aria-hidden="true"></i></button>
+            <button *ngIf="project.lead && project.lead._id === currentUser.info._id || currentUser.info.role.name==='HR'"class="action-link" (click)="editProject($event.currentTarget.value)" [value]="project._id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button *ngIf="currentUser.info.role.name==='HR'" class="action-link" (click)="deleteProject($event.currentTarget.value)" [value]="project._id"><i class="fa fa-trash" aria-hidden="true"></i></button>
           </td>
         </tr>
       </tbody>
