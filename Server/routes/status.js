@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Q = require('q');
+const _ = require('underscore');
 
 // load the Status model
 const Status = require('../models/status');
 
 module.exports = {
 	get: function (req, res) {
-		Status.findOne({ name: req.query.statusName }, function (err, existingStatus) {
-
-			res.status(200).send(existingStatus);
+		//code to get user info
+		Q(Status.find(req.query)).then(function (status) {
+			res.status(200).send(status);
 		});
 	},
 	put: function (req, res) {

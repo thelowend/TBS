@@ -6,6 +6,7 @@ import { UserService, SkillService, ProjectService } from '../../_services/index
 
 import * as moment from 'moment';
 import * as _ from "lodash";
+import { KeysPipe } from '../../_helpers/keys.pipe';
 
 @Component({
   selector: 'app-team',
@@ -24,6 +25,7 @@ export class TeamComponent implements OnInit {
   invalidSkillQuery:Boolean;
   invalidSkillQueryMessage:string;
   datepickerOptions: DatePickerOptions;
+  filteredUsers: any;
 
 
   constructor(private skillService: SkillService, private projectService: ProjectService, private userService: UserService) {
@@ -131,6 +133,7 @@ export class TeamComponent implements OnInit {
   saveProject(proj:any) {
       this.projectService.update(proj).subscribe(response => {
         localStorage.setItem('currentProject', JSON.stringify(proj));
+        this.filterUsers();
       });
   }
 
@@ -161,6 +164,56 @@ export class TeamComponent implements OnInit {
     this.userService.getAll().subscribe(users => {
       this.users = users;
     });
+  }
+
+  filterUsers() {
+    var neededSkills = [];
+    var fusers = {};
+    var cproject = this.currentProject;
+
+    if (cproject.skills.length) {
+      _.each(cproject.skills, function (skill, key) {
+        neededSkills.push(skill.skill._id);
+        fusers[skill.skill.name] = [];
+      });
+
+      _.each(this.users, function (user, key) {
+        _.each(neededSkills, function (neededSkill) {
+          _.each(user.skills, function (userSkill) {
+            if (neededSkill == userSkill.skill._id) {
+              var isAlreadyEmployed = false;
+              for (let i = 0; !isAlreadyEmployed && i < cproject.employees.length; i++) {
+                isAlreadyEmployed = cproject.employees[i].user._id == user._id;
+              }
+              if(!isAlreadyEmployed) {
+                fusers[userSkill.skill.name].push({
+                  userid: user._id,
+                  name: user.name,
+                  skill: userSkill
+                });
+              }
+            }
+          });
+        });
+      });
+    }
+    this.filteredUsers = fusers;
+  }
+  addEmployeeProject(id:string){
+    console.log(id);
+    var cproject = this.currentProject;
+    var foundUser;
+    for (let i=0; !foundUser && i < this.users.length; i++) {
+      if (this.users[i]._id == id) {
+          foundUser = this.users[i];
+          cproject.employees.push({
+            user: foundUser,
+            start_date: moment().toDate().toISOString(),
+            end_date: moment().toDate().toISOString()
+          })
+      }
+    }
+    this.saveProject(cproject);
   }
 
   loadProjects () {

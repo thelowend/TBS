@@ -7,13 +7,13 @@ import { HttpModule } from '@angular/http';
 import { APP_ROUTING } from './app.routes';
 
 //---------------- Services ----------------//
-import { AlertService, AuthenticationService, UserService, SkillService, ProjectService } from './_services/index';
+import { AlertService, AuthenticationService, UserService, SkillService, ProjectService, StatusService } from './_services/index';
 
 //---------------- Components ----------------//
 // App
 import { AppComponent } from './app.component';
 import { DatePickerModule } from 'ng2-datepicker';
-
+import { KeysPipe } from './_helpers/keys.pipe';
 // Sections
 import { NavbarComponent, ManageSkillsComponent, AlertComponent, HomeComponent, LoginComponent, RegisterComponent, SearchComponent, ReportsComponent, UsersComponent, ClientsComponent, ProjectsComponent, RolesComponent, TeamComponent, SkillsComponent } from './components/index';
 
@@ -37,7 +37,8 @@ import { AuthGuard } from './_guards/index';
     ProjectsComponent,
     RolesComponent,
     TeamComponent,
-    SkillsComponent
+    SkillsComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,8 @@ import { AuthGuard } from './_guards/index';
     AuthenticationService,
     UserService,
     SkillService,
-    ProjectService
+    ProjectService,
+    StatusService
   ],
   bootstrap: [AppComponent]
 })

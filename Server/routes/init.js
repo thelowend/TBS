@@ -33,7 +33,8 @@ const addProjects = function (req, res, db) {
   let skillJavascriptId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Javascript'})._id),
       skillJavaId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Java'})._id),
       skillJenkinsId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Jenkins'})._id),
-      skill3dModelingId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === '3D Modeling'})._id);
+      skill3dModelingId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === '3D Modeling'})._id),
+      skillSQLId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'SQL'})._id);
 
   //Getting recently inserted User IDs
   let userDiegoId = mongoose.Types.ObjectId(_.find(db.user, (user) => { return user.email === 'diegop@tbs.com'})._id),
@@ -55,7 +56,17 @@ const addProjects = function (req, res, db) {
     skills: [],
     employees: []
   },{
-    status: statusVigenteId,
+    status: statusActivoId,
+    name: 'Proyecto 3',
+    description: 'Proyecto interno anterior',
+    start_date: new Date('Jun 6, 2017'),
+    end_date: new Date('Jun 17, 2017'),
+    client: clientRGAId,
+    lead: userLeadId,
+    skills: [],
+    employees: []
+  },{
+    status: statusInactivoId,
     name: 'Proyecto 2',
     description: 'Proyecto 2 para Nike',
     start_date: new Date('Jun 15, 2017'),
@@ -97,7 +108,8 @@ const addUsers = function (req, res, db) {
   let skillJavascriptId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Javascript'})._id),
       skillJavaId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Java'})._id),
       skillJenkinsId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'Jenkins'})._id),
-      skill3dModelingId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === '3D Modeling'})._id);
+      skill3dModelingId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === '3D Modeling'})._id),
+      skillSQLId = mongoose.Types.ObjectId(_.find(db.skill, (skill) => { return skill.name === 'SQL'})._id);
 
   //Getting recently inserted Role IDs
   let roleHRId = mongoose.Types.ObjectId(_.find(db.role, (role) => { return role.name === 'HR'})._id),
@@ -126,6 +138,10 @@ const addUsers = function (req, res, db) {
       skill: skillJenkinsId,
       level: 6,
       verified: false
+    },{
+      skill: skillSQLId,
+      level: 4,
+      verified: true
     }],
     experience: [{
       employer: 'R/GA',
@@ -294,7 +310,7 @@ const secondaryTables = function (req, res, db) {
     name: 'Javascript',
     description: 'ES5/ES6/ES7'
   },{
-    status: statusPendienteId,
+    status: statusActivoId,
     name: 'Java',
     description: 'Java Enterprise'
   },{
@@ -305,6 +321,10 @@ const secondaryTables = function (req, res, db) {
     status: statusPendienteId,
     name: '3D Modeling',
     description: 'Bender/Maya'
+  },{
+    status: statusPendienteId,
+    name: 'SQL',
+    description: 'mySQL'
   }], function (err, skill) {
     if (err) {
       skillDefer.reject(err);

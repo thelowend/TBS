@@ -1,3 +1,51 @@
-<p>
-  skills works!
-</p>
+<div class="row">
+  <div class="col-6">
+    <h2>Active Skills</h2>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Skill</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="activeSkills && activeSkills.length < 1">
+          <td colspan="3">No active skills found</td>
+        </tr>
+        <tr *ngFor="let askill of activeSkills; let i = index">
+          <td>{{askill.name}}</td>
+          <td>{{askill.description}}</td>
+          <td>
+            <button (click)="removeSkill($event.currentTarget.value)" [value]="askill._id"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <h2>Suggested Skills</h2>
+    <table class="table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Skill</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="pendingSkills && pendingSkills.length < 1">
+          <td colspan="3">No active skills found</td>
+        </tr>
+        <tr *ngFor="let pskill of pendingSkills; let i = index">
+          <td>{{pskill.name}}</td>
+          <td>{{pskill.description}}</td>
+          <td>
+            <button (click)="acceptSkill($event.currentTarget.value)" [value]="pskill._id"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
+            <button (click)="removeSkill($event.currentTarget.value)" [value]="pskill._id"><i class="fa fa-thumbs-down" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

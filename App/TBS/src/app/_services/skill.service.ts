@@ -24,7 +24,7 @@ export class SkillService {
     }
 
     update(skill: Skill) {
-        return this.http.put(environment.api + '/api/skill/' + skill._id, skill, this.jwt()).map((response: Response) => response.json());
+        return this.http.post(environment.api + '/api/skill', skill, this.jwt()).map((response: Response) => response.json());
     }
 
     delete(id: number) {

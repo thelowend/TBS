@@ -8,7 +8,26 @@ const Project = require('../models/project');
 
 module.exports = {
 	get: function (req, res) {
-		Q(Project.find(req.query).populate('status').exec()).then((skills) => {
+		let fullQuery = {};
+		_.each(req.query, function (value, key) {
+			if (/start_date/gi.test(key)) {
+				fullQuery[key] = { '$gte': new Date(value) };
+			} else if (/end_date/gi.test(key)) {
+				fullQuery[key] = { '$lte': new Date(value) };
+			} else {
+				fullQuery[key] = (value === 'null'? null: value);
+			}
+		});
+		console.log('----------------------');
+		console.log(fullQuery);
+		console.log('----------------------');
+		Q(Project.find(fullQuery)
+		.populate('status')
+		.populate('client')
+		.populate('lead')
+		.populate('skills.skill')
+		.populate('employees.user')
+		.exec()).then((skills) => {
 			res.status(200).send(skills);
 		});
 	},
@@ -24,13 +43,12 @@ module.exports = {
 		});
 	},
 	getAssignedProjects: function (req, res) {
-		console.log('assignendndnsd');
 		Q(Project.find()
 		.populate('status')
 		.populate('client')
 		.populate('lead')
-		.populate('skills')
-		.populate('employees')
+		.populate('skills.skill')
+		.populate('employees.user')
 		.exec()).then((projects) => {
 			let response = [];
 			//console.log(projects);
@@ -67,8 +85,8 @@ module.exports = {
 		.populate('status')
 		.populate('client')
 		.populate('lead')
-		.populate('skills')
-		.populate('employees')
+		.populate('skills.skill')
+		.populate('employees.user')
 		.exec()).then((projects) => {
 			let response = [];
 			_.each(projects, function (project) {
@@ -89,8 +107,8 @@ module.exports = {
 		.populate('status')
 		.populate('client')
 		.populate('lead')
-		.populate('skills')
-		.populate('employees')
+		.populate('skills.skill')
+		.populate('employees.user')
 		.exec()).then((projects) => {
 			console.log(projects);
 			let response = [];
@@ -110,6 +128,22 @@ module.exports = {
 				});
 			});
 			res.status(200).send(response);
+		});
+	},
+	post: function(req, res) {
+		console.log('------------ POST PROJECT -------------');
+		Project.findOne({ _id: req.body._id }, (err, proj) => {
+			proj.status = req.body.status;
+			proj.employees = req.body.employees;
+			proj.lead = req.body.lead;
+			proj.skills = req.body.skills;
+
+			proj.save(function (err, newProj) {
+				if (err) {
+					res.send(err);
+				}
+				res.status(200).send({ response: 'Project Updated!', value: newProj });
+			});
 		});
 	},
 	put: function (req, res) {

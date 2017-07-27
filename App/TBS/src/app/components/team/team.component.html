@@ -87,9 +87,30 @@
     <h1>Team Building</h1>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <p>employees</p>
+<div class="row" *ngIf="currentProject">
+  <div class="col-3" *ngFor="let fskill of filteredUsers | keys">
+      <table class="table table-striped">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Employee</th>
+            <th>{{fskill}}</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="filteredUsers[fskill] && filteredUsers[fskill].length < 1">
+            <td colspan="3">No users found with that skill</td>
+          </tr>
+          <tr *ngFor="let fuser of filteredUsers[fskill]; let i = index">
+            <td>{{fuser.name}}</td>
+            <td>{{fuser.skill.level}}/10</td>
+            <td>
+              <button (click)="addEmployeeProject($event.currentTarget.value)" [value]="fuser.userid"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+              <button (click)="removeEmployeeProject($event.currentTarget.value)" [value]="fuser.userid"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>
 <div class="row">

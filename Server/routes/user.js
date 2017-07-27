@@ -23,7 +23,7 @@ let createToken = function (user) {
 module.exports = {
   get: function (req, res) {
     //code to get user info
-    Q(User.find(req.query)).then(function (users) {
+    Q(User.find(req.query).populate('status').populate('skills.skill')).then(function (users) {
 			res.status(200).send(users);
 		});
   },
