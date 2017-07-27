@@ -6,14 +6,14 @@
       user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
       start_date: { type: Date, required: true },
       end_date: { type: Date, required: true },
-    }, { _id: false });
+    });
 
     let ProjectSkillSchema = Schema({
       skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },
       amount: { type: Number, required: true, default: 1},
       start_date: { type: Date, required: true },
       end_date: { type: Date, required: true }
-    }, { _id: false });
+    });
 
     let ProjectSchema = Schema({
       status: { type: Schema.Types.ObjectId, ref: 'Status', required: true },

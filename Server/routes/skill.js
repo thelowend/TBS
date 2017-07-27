@@ -8,9 +8,19 @@ const Skill = require('../models/skill');
 
 module.exports = {
 	get: function (req, res) {
-		if(_.isEmpty(req.query))
-		Q(Skill.find(req.query).exec()).then((skills) => {
+		Q(Skill.find(req.query).populate('status').exec()).then((skills) => {
 			res.status(200).send(skills);
+		});
+	},
+	getByStatus: function (req, res) {
+		Q(Skill.find(req.query).populate('status').exec()).then((skills) => {
+			let response = [];
+			_.each(skills, function (skill) {
+				if (skill.status.name === req.params.status) {
+					response.push(skill);
+				}
+			});
+			res.status(200).send(response);
 		});
 	},
 	put: function (req, res) {

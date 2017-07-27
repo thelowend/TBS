@@ -52,17 +52,7 @@ const addProjects = function (req, res, db) {
     end_date: new Date('Aug 15, 2017'),
     client: clientNikeId,
     lead: userLeadId,
-    skills: [{
-      skill: skillJavascriptId,
-      amount: 2,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 15, 2017')
-    },{
-      skill: skillJenkinsId,
-      amount: 1,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 10, 2017')
-    }],
+    skills: [],
     employees: []
   },{
     status: statusVigenteId,
@@ -71,27 +61,9 @@ const addProjects = function (req, res, db) {
     start_date: new Date('Jun 15, 2017'),
     end_date: new Date('Aug 15, 2017'),
     client: clientNikeId,
-    //lead: userLeadId,
-    skills: [{
-      skill: skillJavascriptId,
-      amount: 2,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 15, 2017')
-    },{
-      skill: skillJenkinsId,
-      amount: 1,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 10, 2017')
-    }],
-    employees: [{
-      user: userDiegoId,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 15, 2017')
-    },{
-      user: userJonId,
-      start_date: new Date('Jun 15, 2017'),
-      end_date: new Date('Aug 15, 2017')
-    }]
+    lead: null,
+    skills: [],
+    employees: []
   }], function (err, project) {
     if (err) {
       projectDefer.reject(err);
@@ -157,12 +129,12 @@ const addUsers = function (req, res, db) {
     }],
     experience: [{
       employer: 'R/GA',
-      description: 'R/GA Media Group',
+      description: 'Senior Software Engineer',
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date()
     },{
       employer: 'Globant',
-      description: 'Globant SRL',
+      description: 'Analista Programador',
       start_date: new Date('Mar 10, 2010'),
       end_date: new Date('Jun 15, 2012')
     }],
@@ -189,7 +161,7 @@ const addUsers = function (req, res, db) {
     }],
     experience: [{
       employer: 'COTO',
-      description: 'COTO Cicsa',
+      description: 'Security',
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date()
     }],
@@ -216,7 +188,7 @@ const addUsers = function (req, res, db) {
     }],
     experience: [{
       employer: 'COTO',
-      description: 'COTO Cicsa',
+      description: 'Cashier',
       start_date: new Date('Jun 15, 2012'),
       end_date: new Date()
     }],

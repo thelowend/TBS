@@ -33,6 +33,13 @@ module.exports = (app) => {
 
     // Projects
     app.get('/api/project', checkAuth, checkPermissions, RouteProject.get);
+    app.get('/api/project/:status', checkAuth, checkPermissions, RouteProject.getByStatus);
+    app.get('/api/project/user/:userid', checkAuth, checkPermissions, RouteProject.getAssignedProjects);
+    app.get('/api/project/user/:userid/:status', checkAuth, checkPermissions, RouteProject.getAssignedProjects);
+    app.get('/api/project/lead/:userid', checkAuth, checkPermissions, RouteProject.getLeadProjects);
+    app.get('/api/project/lead/:userid/:status', checkAuth, checkPermissions, RouteProject.getLeadProjects);
+    app.get('/api/project/employee/:userid', checkAuth, checkPermissions, RouteProject.getEmployeeProjects);
+    app.get('/api/project/employee/:userid/:status', checkAuth, checkPermissions, RouteProject.getEmployeeProjects);
     app.put('/api/project', checkAuth, checkPermissions, RouteProject.put);
     app.delete('/api/project', checkAuth, checkPermissions, RouteProject.delete);
 
@@ -48,6 +55,7 @@ module.exports = (app) => {
 
     // Skill
     app.get('/api/skill', checkAuth, checkPermissions, RouteSkill.get);
+    app.get('/api/skill/:status', checkAuth, checkPermissions, RouteSkill.getByStatus);
     app.put('/api/skill', checkAuth, checkPermissions, RouteSkill.put);
     app.delete('/api/skill', checkAuth, checkPermissions, RouteSkill.delete);
 

@@ -7,7 +7,7 @@
       description: { type: String, required: true },
       start_date: { type: Date, required: true },
       end_date: { type: Date, required: true },
-    }, { _id: false });
+    });
 
     let UserSkillSchema = Schema({
       skill: { type: Schema.Types.ObjectId, ref: 'Skill', required: true },

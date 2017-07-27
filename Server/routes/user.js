@@ -23,27 +23,21 @@ let createToken = function (user) {
 module.exports = {
   get: function (req, res) {
     //code to get user info
-    User.findOne({ email: req.query.email });
-		/*
-		function (err, existingUser) {
-      if (!err) {
-        res.status(200).send(existingUser);
-      } else {
-        console.log(err);
-      }
-    }
-		*/
+    Q(User.find(req.query)).then(function (users) {
+			res.status(200).send(users);
+		});
   },
 	post: function (req, res) {
 		//code to insert user
 		console.log('------------ POST USER -------------');
 		User.findOne({ _id: req.body._id }, (err, usr) => {
 			usr.skills = req.body.skills;
+			usr.experience = req.body.experience;
 			usr.save(function (err, newUser) {
 				if (err) {
 					res.send(err);
 				}
-				res.status(200).send({ response: 'User Updated!' });
+				res.status(200).send({ response: 'User Updated!', value: newUser });
 			});
 		});
 	},
@@ -100,7 +94,5 @@ module.exports = {
 				}
 
 			});
-
-		//User.findOne({ email: req.body.email }, );
 	}
 };
