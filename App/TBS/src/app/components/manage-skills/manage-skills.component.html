@@ -24,7 +24,7 @@
           </div>
           <div class="col-4">
             <div class="form-group d-flex flex-end">
-                <button class="btn btn-primary" [disabled]="skillExists || !inputSkillName"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
+                <button class="btn btn-primary" [disabled]="skillExists || !inputSkillName" (click)="suggestSkillInit(currentSkill.name)" data-toggle="modal" data-target="#suggestSkillModal"><i class="fa fa-book" aria-hidden="true"></i> Suggest Skill</button>
             </div>
           </div>
         </div>
@@ -110,5 +110,39 @@
       </tbody>
     </table>
     <p></p>
+  </div>
+</div>
+
+<!-- Resumé Modal -->
+<div class="modal fade" id="suggestSkillModal" tabindex="-1" role="dialog" aria-labelledby="suggestSkillModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Suggest Skill</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body container">
+        <div class="row abm-form">
+            <div class="col-8">
+              <form>
+                <div class="form-group">
+                  <label for="inputEmployer">Skill Name</label>
+                  <input type="text" class="form-control" id="inputSuggestedSkillName" placeholder="<Skill Name>">
+                </div>
+                <div class="form-group">
+                  <label for="inputJobDescription">Description</label>
+                  <textarea class="form-control" id="inputSuggestedSkillDescription" rows="3" maxlength="300" placeholder="<Skill Description>"></textarea>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveSuggestSkill()">Confirm</button>
+      </div>
+    </div>
   </div>
 </div>

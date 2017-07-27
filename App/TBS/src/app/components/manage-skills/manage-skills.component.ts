@@ -19,6 +19,8 @@ export class ManageSkillsComponent implements OnInit {
   inputSkillLevel: Number;
   skillExists: Boolean;
   skillSelected: Boolean;
+  inputSuggestSkillName: string;
+  inputSuggestSkillDescription: string;
 
   constructor(private userService: UserService, private skillService: SkillService) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -105,6 +107,15 @@ export class ManageSkillsComponent implements OnInit {
 
   cancelSkill() {
     location.reload();
+  }
+
+  suggestSkillInit(suggestedName:string) {
+    this.inputSuggestSkillName = suggestedName;
+  }
+
+  saveSuggestSkill() {
+    //this.inputSuggestSkillName;
+    //this.inputSuggestSkillDescription;
   }
 
   private loadAllSkills() {

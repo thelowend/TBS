@@ -4,14 +4,14 @@ export class User {
     _id: Number;
     status: Object;
     file_number: Number;
-    name: String;
-    pid_type: String;
+    name: string;
+    pid_type: string;
     pid_number: Number;
-    address: String;
-    phone: String;
-    email: String;
+    address: string;
+    phone: string;
+    email: string;
     //password: String;
-    interests: String;
+    interests: string;
     skills: Array<UserSkill>;
     experience: Array<Object>;
     roles: Array<Object>;
@@ -25,8 +25,9 @@ export class UserSkill {
 }
 
 export class UserExperience {
-  employer: String;
-  description: String;
-  start_date: Date;
-  end_date: Date;
+  _id: Number;
+  employer: string;
+  description: string;
+  start_date: string;
+  end_date: string;
 }

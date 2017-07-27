@@ -7,8 +7,8 @@
       <h2>{{currentUser.info.role.description}}</h2>
       <p *ngIf="currentUser.info.experience.length > 0">{{currentUser.info.experience[0].description}}</p>
       <ul class="options">
-        <li><a class="nav-link" data-toggle="modal" data-target="#detailedInfoModal">Details</a></li>
-        <li><a class="nav-link" data-toggle="modal" data-target="#resumeModal">Resumé</a></li>
+        <li><a class="nav-link" data-toggle="modal" data-target="#detailedInfoModal"><i class="fa fa-search" aria-hidden="true"></i> <span>Details</span></a></li>
+        <li><a class="nav-link" data-toggle="modal" data-target="#resumeModal"><i class="fa fa-file" aria-hidden="true"></i> <span>Resumé</span></a></li>
         <li><b>Interests:</b> <span>{{currentUser.info.interests || 'No Interests Found'}} </span><a data-toggle="modal" data-target="#interestsModal"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
         <li><b>Latest Projects:</b> <span>{{currentUser.info.projects || 'No Projects Found'}}</span></li>
       </ul>
@@ -55,31 +55,39 @@
         </button>
       </div>
       <div class="modal-body container">
-        <div class="row justify-content-center">
-          <div class="abm-form col-10">
-            <div class="row">
-              <div class="col-6">
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon1">Employer</span>
-                  <input type="text" class="form-control" placeholder="Employer Name..." aria-describedby="basic-addon1">
+        <div class="row abm-form">
+            <div class="col-8">
+              <form>
+                <div class="form-group">
+                  <label for="inputEmployer">Employer</label>
+                  <input type="text" class="form-control" id="inputEmployer" placeholder="<Employer/Company>" [(ngModel)]="exp_employer" name="employer">
+                  <!--small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small-->
                 </div>
+                <div class="form-group">
+                  <label for="inputJobDescription">Job Description</label>
+                  <textarea class="form-control" id="inputJobDescription" rows="3" maxlength="300" [(ngModel)]="exp_description" name="jobdescription" placeholder="<Job Description>"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label for="inputStartDate">Start Date</label><br/>
+                <ng2-datepicker id="inputStartDate" [options]="datepickerOptions" [(ngModel)]="exp_start_date"></ng2-datepicker>
+              </div>
+              <div class="form-group">
+                <label for="inputEndDate">End Date</label><br/>
+                <ng2-datepicker id="inputEndDate" [options]="datepickerOptions" [(ngModel)]="exp_end_date"></ng2-datepicker>
+              </div>
+              <div class="add-experience">
+                <button type="submit" class="btn btn-primary" (click)="saveExperience()">Save</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!currentUserExperience._id" (click)="cancelExperience()">Cancel</button>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="input-group">
-                  <span class="input-group-addon" id="basic-addon2">Description</span>
-                  <input type="text" class="form-control" placeholder="Job Description..." aria-describedby="basic-addon2">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                <ng2-datepicker [options]="options" [(ngModel)]="start_date"></ng2-datepicker>
-              </div>
-              <div class="col-6">
-                <ng2-datepicker [options]="options" [(ngModel)]="end_date"></ng2-datepicker>
-              </div>
+        </div>
+        <div class="row justify-content-center" *ngIf="!!invalidExperienceMessage">
+          <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+              <strong>Error!</strong> {{invalidExperienceMessage}}
             </div>
           </div>
         </div>
@@ -100,11 +108,14 @@
                     <tr *ngIf="currentUser.info.experience.length < 1">
                       <td colspan="4">There are no job experiences associated with {{currentUser.info.name}}.</td>
                     </tr>
-                    <tr *ngFor="let exp of currentUser.info.experience">
+                    <tr *ngFor="let exp of currentUser.info.experience; let i = index">
                       <td>{{exp.employer}}</td>
                       <td>{{exp.description}}</td>
                       <td>{{exp.start_date | date: 'dd/MM/yyyy'}} - {{exp.end_date | date: 'dd/MM/yyyy' || 'ongoing'}}</td>
-                      <td>{{exp.description}}</td>
+                      <td>
+                        <button class="action-link" [disabled]="!currentUser.info.experience[i]._id" (click)="editUserExperience(currentUser.info.experience[i], i)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button class="action-link" (click)="removeUserExperience(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -115,7 +126,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveResumeChanges()">Save changes</button>
       </div>
     </div>
   </div>
