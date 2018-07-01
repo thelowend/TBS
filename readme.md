@@ -1,3 +1,8 @@
+## Trabajo Práctico Seminario de Integración Profesional  
+Primer Cuatrimestre de 2017, Turno Noche  
+Profesora Rojo  
+Universidad Argentina de la Empresa  
+
 # MongoDB (Instrucciones para Windows)
 -------
 
